@@ -17,7 +17,6 @@ nav{
     text-align: center;
     display: flex;
     flex-direction: column;
-    margin: 5% auto;
     margin: 5% auto 2% auto;
 }
 a{
@@ -46,11 +45,9 @@ table{
     width: 50%;
     text-align: center;
     margin: auto;
-    border-collapse: collapse;
     border: 3px dotted #13284c;
 }
-tr, td{
-    border: 3px dotted #13284c;
+tr, td, th{
     padding: 10px;
     font-size: 1.2vw;
 }
