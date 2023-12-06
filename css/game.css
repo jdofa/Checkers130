@@ -13,12 +13,11 @@ header{
     padding-top: 20px;
 }
 nav{
-    width: 30%;
+    width: 15%;
     text-align: center;
-
     display: flex;
     flex-direction: column;
-    margin: 5% auto;
+    margin: 1% auto;
 }
 a{
     text-decoration: none;
