@@ -2,8 +2,8 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Login</title>
-        <link rel="stylesheet" href="css/login.css">
+        <title>Sign Up</title>
+        <link rel="stylesheet" href="css/signup.css">
     </head>
     <body>
         <header>
@@ -17,14 +17,14 @@
         <form method="post">
             <div class="form-section">
                 <label>Username:</label>
-                <input type="text" name="username" placeholder="Enter Username">
+                <input type="text" name="username" placeholder="Create Username">
             </div>
             <div class="form-section">
                 <label>Password:</label>
-                <input type="password" name="password" placeholder="Enter Password">
+                <input type="password" name="password" placeholder="Create Password">
             </div>
             <div class="form-section">
-                <input formaction="php/checklogin.php" type="submit" value="Log In">
+                <input formaction="php/createaccount.php" type="submit" value="Create Account">
             </div>
         </form>
     </body>

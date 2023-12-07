@@ -47,3 +47,7 @@ h1{
     border-radius: 4px;
 }
 /* id */
+#username{
+    font-size: 2vw;
+    color: #13284c;
+}

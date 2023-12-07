@@ -19,15 +19,22 @@ $username = $_POST['username'];
 $password = $_POST['password'];
 
 // Check if username and password match
-$sql = "SELECT * FROM Users WHERE Username = '$username' AND Password = '$password'";
+$sql = "SELECT * FROM Users WHERE Username = '$username'";
 $result = $conn -> query($sql);
 if ($result -> num_rows == 0) {
-    $_SESSION['loggedin'] = false;
-    header("Location: ../login.php");
-}
-else {
+    //create user
+    $sql = "INSERT INTO Users (Username, Password) VALUES ('$username', '$password')";
+    if ($conn->query($sql) === FALSE) {
+        echo "Error Creating User: " . $conn->error;
+        $error = TRUE;
+    }
     $_SESSION['loggedin'] = true;
     $_SESSION['username'] = $username;
     header("Location: ../index.php");
+}
+else {
+    //user exists
+    $_SESSION['loggedin'] = false;
+    header("Location: ../login.php");
 }
 ?>
