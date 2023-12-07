@@ -141,3 +141,62 @@ footer p {
 .selected-square {
     border: 3px solid yellow; 
 }
+
+
+.possible-move {
+    background-color: rgba(0, 255, 0, 0.3); 
+}
+
+
+.square {
+    width: 50px;       /* Size of the square */
+    height: 50px;      /* Size of the square */
+    border: 1px solid #333; /* Border to distinguish squares */
+    display: flex;     /* Flexbox for centering content */
+    justify-content: center; /* Center content horizontally */
+    align-items: center;     /* Center content vertically */
+}
+
+/* Additional styles for dark and light squares */
+.square.light {
+    background-color: #f0d9b5; /* Light color for square */
+}
+
+.square.dark {
+    background-color: #b58863; /* Dark color for square */
+}
+
+/* Style for highlighting a selected square */
+.selected-square {
+    border: 3px solid yellow; /* Highlighting border */
+}
+
+/* Styles for highlighting possible and blocked moves */
+.square.possible-move {
+    background-color: rgba(0, 255, 0, 0.3); /* Semi-transparent green */
+}
+
+.square.blocked-move {
+    background-color: rgba(255, 0, 0, 0.3); /* Semi-transparent red */
+}
+
+
+#gameInfo {
+    margin: 20px;
+    padding: 10px;
+    background-color: #f2f2f2; /* Light grey background */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    text-align: center; /* Center the text inside each element */
+    color: #333; /* Dark grey text for readability */
+    font-family: Arial, sans-serif; /* A standard font */
+}
+
+#gameInfo p {
+    margin: 10px 0; /* Space out each piece of info */
+    font-size: 16px; /* A readable font size */
+}
+
+#gameInfo span {
+    font-weight: bold; /* Make the dynamic parts (like the time and counts) stand out */
+}

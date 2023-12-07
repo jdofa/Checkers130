@@ -13,6 +13,7 @@
         <a href="index.html">Quit</a>    
     </nav>
     <h1>Checkers Game</h1>
+    
     <div id="gameOptions">
         <label for="boardSize">Board Size:</label>
         <select id="boardSize">
@@ -34,6 +35,12 @@
     <button id="resetButton" onclick="resetGame()">Reset Game</button>
     <div id="gameStatus"></div>
     <div id="checkerboard" class="checkerboard"></div>
+
+    <div id="gameInfo">
+        <p>Time Elapsed: <span id="timeElapsed">0:00</span></p>
+        <p>Red Pieces: <span id="redPiecesCount">12</span></p>
+        <p>Black Pieces: <span id="blackPiecesCount">12</span></p>
+    </div>
 
     <footer>
         <p>&copy; 2023 Checkers Game Project by Youssif Alakwaa & Jose Nieblas</p>

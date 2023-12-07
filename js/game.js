@@ -4,6 +4,9 @@ let selectedPiece = null;
 let currentPlayer = 'red';
 let boardSize = 8; // Default board size
 let board = []; // 2D array to represent the board state
+let startTime;
+let elapsedTime = 0;
+let timerInterval;
 
 
 
@@ -47,6 +50,8 @@ function createBoard() {
     }
 
     updateGameStatus();
+    resetTimer(); // Reset and start the timer
+    updatePieceCount(); // Update the piece counts
 }
 
 
@@ -59,11 +64,9 @@ function handleSquareClick(row, col) {
     console.log(`Square clicked: row ${row}, col ${col}, current player: ${currentPlayer}`);
     const pieceColor = board[row][col];
 
-    // Remove previous selection (if any)
-    const previouslySelected = document.querySelector('.selected-square');
-    if (previouslySelected) {
-        previouslySelected.classList.remove('selected-square');
-    }
+    // Clear previous selections and highlighted moves
+    clearSelection();
+    clearHighlightedMoves();
 
     if (selectedPiece === null && pieceColor === currentPlayer) {
         console.log("Piece selected");
@@ -74,6 +77,9 @@ function handleSquareClick(row, col) {
         if (clickedSquare) {
             clickedSquare.classList.add('selected-square');
         }
+
+        // Calculate and highlight possible and blocked moves
+        calculatePossibleMoves(row, col);
     } else if (selectedPiece) {
         if (selectedPiece.row === row && selectedPiece.col === col) {
             console.log("Piece deselected");
@@ -88,6 +94,20 @@ function handleSquareClick(row, col) {
         }
     }
 }
+
+function clearSelection() {
+    const previouslySelected = document.querySelector('.selected-square');
+    if (previouslySelected) {
+        previouslySelected.classList.remove('selected-square');
+    }
+}
+
+function clearHighlightedMoves() {
+    document.querySelectorAll('.square').forEach(square => {
+        square.style.backgroundColor = ''; // Reset the background color
+    });
+}
+
 
 
 function isCaptureAvailable(player) {
@@ -214,8 +234,17 @@ function isInsideBoard(row, col) {
 function resetGame() {
     selectedPiece = null;
     currentPlayer = 'red';
-    createBoard();
-    updateGameStatus();
+    resetTimer(); // Reset the timer
+    updatePieceCount(); // Update the piece count
+    createBoard(); // Re-create the board
+}
+
+// Function to reset the timer
+function resetTimer() {
+    clearInterval(timerInterval);
+    elapsedTime = 0;
+    document.getElementById("timeElapsed").innerText = "00:00";
+    startTimer(); // Start the timer
 }
 
 
@@ -237,8 +266,10 @@ function movePiece(fromRow, fromCol, toRow, toCol) {
     if (Math.abs(fromRow - toRow) === 2) {
         const midRow = (fromRow + toRow) / 2;
         const midCol = (fromCol + toCol) / 2;
-        board[midRow][midCol] = null; // Remove the captured piece from the board array
-        removePieceFromBoard(midRow, midCol); // Remove the captured piece visually
+        if (board[midRow][midCol] !== null) {
+            board[midRow][midCol] = null; // Remove the captured piece from the board array
+            removePieceFromBoard(midRow, midCol); // Remove the captured piece visually
+        }
     }
 
     updatePieceOnBoard(fromRow, fromCol, toRow, toCol); // Update the visual representation of the board
@@ -249,7 +280,9 @@ function movePiece(fromRow, fromCol, toRow, toCol) {
     }
 
     togglePlayer(); // Switch to the other player after the move
+    updatePieceCount(); // Update the piece count after the move
 }
+
 
 
 function removePieceFromBoard(row, col) {
@@ -314,6 +347,89 @@ function updateGameStatus() {
 }
 
 
+function calculatePossibleMoves(row, col) {
+    const possibleMoves = [];
+    const blockedMoves = [];
+
+    // Check all four diagonal directions
+    checkMoveDirection(possibleMoves, blockedMoves, row, col, 1, 1);  // down-right
+    checkMoveDirection(possibleMoves, blockedMoves, row, col, 1, -1); // down-left
+    checkMoveDirection(possibleMoves, blockedMoves, row, col, -1, 1); // up-right
+    checkMoveDirection(possibleMoves, blockedMoves, row, col, -1, -1); // up-left
+
+    highlightMoves(possibleMoves, 'green');
+    highlightMoves(blockedMoves, 'red');
+}
+
+function checkMoveDirection(possibleMoves, blockedMoves, row, col, rowIncrement, colIncrement) {
+    const newRow = row + rowIncrement;
+    const newCol = col + colIncrement;
+
+    if (isInsideBoard(newRow, newCol)) {
+        if (board[newRow][newCol] === null && ((currentPlayer === 'red' && rowIncrement === 1) || (currentPlayer === 'black' && rowIncrement === -1))) {
+            possibleMoves.push({ row: newRow, col: newCol });
+        } else {
+            blockedMoves.push({ row: newRow, col: newCol });
+        }
+    }
+}
+
+function highlightMoves(moves, color) {
+    moves.forEach(move => {
+        const square = document.querySelector(`[data-row="${move.row}"][data-col="${move.col}"]`);
+        if (square) {
+            square.style.backgroundColor = color;
+        }
+    });
+}
+
+function clearHighlightedMoves() {
+    document.querySelectorAll('.square').forEach(square => {
+        square.style.backgroundColor = ''; // Reset the background color
+    });
+}
+
+function startTimer() {
+    startTime = Date.now() - elapsedTime;
+    timerInterval = setInterval(function printTime() {
+        elapsedTime = Date.now() - startTime;
+        document.getElementById("timeElapsed").innerText = timeToString(elapsedTime);
+    }, 1000);
+}
+
+
+function timeToString(time) {
+    let diffInHrs = time / 3600000;
+    let hh = Math.floor(diffInHrs);
+
+    let diffInMin = (diffInHrs - hh) * 60;
+    let mm = Math.floor(diffInMin);
+
+    let diffInSec = (diffInMin - mm) * 60;
+    let ss = Math.floor(diffInSec);
+
+    let formattedMM = mm.toString().padStart(2, "0");
+    let formattedSS = ss.toString().padStart(2, "0");
+
+    return `${formattedMM}:${formattedSS}`;
+}
+
+
+
+function updatePieceCount() {
+    let redPieces = 0;
+    let blackPieces = 0;
+
+    for (let row = 0; row < boardSize; row++) {
+        for (let col = 0; col < boardSize; col++) {
+            if (board[row][col] === 'red') redPieces++;
+            if (board[row][col] === 'black') blackPieces++;
+        }
+    }
+
+    document.getElementById("redPiecesCount").innerText = redPieces;
+    document.getElementById("blackPiecesCount").innerText = blackPieces;
+}
 
 
 
