@@ -57,6 +57,30 @@ tr,td,th{
 }
 td{
     color: #ced1d4;
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+}
+form{
+    width: 100%;
+    text-align: center;
+}
+input{
+    width: 10vw;
+    padding: 5px;
+    box-sizing: border-box;
+    border: 2px solid #13284c;
+    border-radius: 4px;
+    background-color: #ced1d4;
+    color: #13284c;
+    font-size: 1vw;
+}
+input:hover{
+    background-color: #13284c;
+    color: #ced1d4;
+=======
+>>>>>>> 87309862d12d4189560a4cc7b94abe31f0968aa0
+>>>>>>> Stashed changes
 }
 /* class */
 .site-logo{
