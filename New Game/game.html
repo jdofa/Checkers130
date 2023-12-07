@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkers Game</title>
+    <link rel="stylesheet" type="text/css" href="assets/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="help.html">Help</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="leaderboard.html">Leaderboard</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <h1>Checkers Game</h1>
+    <div id="gameOptions">
+        <label for="boardSize">Board Size:</label>
+        <select id="boardSize">
+            <option value="8">8x8</option>
+            <option value="10">10x10</option>
+        </select>
+        <label for="player1Color">Player 1 Color:</label>
+        <select id="player1Color">
+            <option value="red">Red</option>
+            <option value="black">Black</option>
+        </select>
+        <label for="player2Color">Player 2 Color:</label>
+        <select id="player2Color">
+            <option value="black">Black</option>
+            <option value="red">Red</option>
+        </select>
+    </div>
+    <button id="startButton">Start Game</button>
+    <button id="resetButton">Reset Game</button>
+    <div id="gameStatus"></div>
+    <div id="checkerboard"></div>
+
+    <footer>
+        <p>&copy; 2023 Checkers Game Project by Youssif Alakwaa & Jose Nieblas</p>
+    </footer>
+
+    <script src="assets/script.js"></script>
+</body>
+</html>
