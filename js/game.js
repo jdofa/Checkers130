@@ -5,6 +5,13 @@ let currentPlayer = 'red';
 let boardSize = 8; // Default board size
 let board = []; // 2D array to represent the board state
 
+
+
+
+
+
+
+
 function createBoard() {
     boardSize = parseInt(document.getElementById('boardSize').value);
     const player1Color = document.getElementById('player1Color').value;
@@ -48,9 +55,15 @@ function createBoard() {
 }
 
 
+
+
+
 function shouldPlacePiece(row, col, boardSize) {
     return (row + col) % 2 !== 0 && (row < 3 || row >= boardSize - 3);
 }
+
+
+
 
 function handleSquareClick(row, col) {
     console.log(`Square clicked: row ${row}, col ${col}, current player: ${currentPlayer}`);
@@ -58,17 +71,25 @@ function handleSquareClick(row, col) {
 
     if (selectedPiece === null && pieceColor === currentPlayer) {
         // Select piece if it belongs to the current player
+        console.log("Piece selected");
         selectedPiece = { row, col };
-    } else if (selectedPiece && !(selectedPiece.row === row && selectedPiece.col === col)) {
-        // Attempt a move if a different square is clicked
-        if (isValidMove(selectedPiece.row, selectedPiece.col, row, col)) {
+    } else if (selectedPiece) {
+        if (selectedPiece.row === row && selectedPiece.col === col) {
+            // Deselect the piece if the same square is clicked
+            console.log("Piece deselected");
+            selectedPiece = null;
+        } else if (isValidMove(selectedPiece.row, selectedPiece.col, row, col)) {
+            // Move the piece if a valid target square is clicked
+            console.log("Moving piece");
             movePiece(selectedPiece.row, selectedPiece.col, row, col);
+            selectedPiece = null; // Clear selected piece after move
         } else {
             console.log("Invalid move");
+            selectedPiece = null; // Clear selected piece if move is invalid
         }
-        selectedPiece = null; // Clear selected piece after move attempt
     }
 }
+
 
 
 
@@ -86,6 +107,11 @@ function isCaptureAvailable(player) {
     }
     return false;
 }
+
+
+
+
+
 
 function canCaptureFrom(row, col) {
     // Assuming regular pieces can only move forward (up for red, down for black)
@@ -117,6 +143,9 @@ function isValidCaptureMove(fromRow, fromCol, toRow, toCol) {
 
 
 
+
+
+
 function isCaptureMove(fromRow, fromCol, toRow, toCol) {
     const rowDiff = Math.abs(toRow - fromRow);
     const colDiff = Math.abs(toCol - fromCol);
@@ -132,29 +161,33 @@ function isCaptureMove(fromRow, fromCol, toRow, toCol) {
 
 
 
+
 function isValidMove(fromRow, fromCol, toRow, toCol) {
     console.log(`Checking valid move from (${fromRow}, ${fromCol}) to (${toRow}, ${toCol})`);
-    
+
     // Check if the move is within the board boundaries
     if (!isInsideBoard(toRow, toCol)) {
         console.log("Move is outside board boundaries.");
         return false;
     }
 
-    // Regular move conditions: move diagonally to an adjacent empty square
+    // Calculate the differences in rows and columns to determine the type of move
     const rowDiff = toRow - fromRow;
     const colDiff = Math.abs(toCol - fromCol);
+
+    // Check if it's a regular move (one square diagonally)
     const isRegularMove = Math.abs(rowDiff) === 1 && colDiff === 1;
-    const isCaptureMove = Math.abs(rowDiff) === 2 && colDiff === 2;
 
     if (isRegularMove) {
+        // Check if the destination square is empty
         if (board[toRow][toCol] !== null) {
             console.log("Destination square is not empty.");
             return false;
         }
 
         // Check the direction of the move for non-king pieces
-        if ((currentPlayer === 'red' && rowDiff !== -1) || (currentPlayer === 'black' && rowDiff !== 1)) {
+        // Red moves down (increasing row number), black moves up (decreasing row number)
+        if ((currentPlayer === 'red' && rowDiff !== 1) || (currentPlayer === 'black' && rowDiff !== -1)) {
             console.log("Invalid direction for regular move.");
             return false;
         }
@@ -163,12 +196,16 @@ function isValidMove(fromRow, fromCol, toRow, toCol) {
         return true;
     }
 
-    // Capture move conditions: jump over an opponent's piece into an empty square
+    // Check if it's a capture move (two squares diagonally)
+    const isCaptureMove = Math.abs(rowDiff) === 2 && colDiff === 2;
+
     if (isCaptureMove) {
+        // Calculate middle square for capture move
         const midRow = (fromRow + toRow) / 2;
         const midCol = (fromCol + toCol) / 2;
-        const isOpponentPiece = board[midRow][midCol] !== null && board[midRow][midCol] !== currentPlayer;
 
+        // Check if the middle square has an opponent's piece and destination square is empty
+        const isOpponentPiece = board[midRow][midCol] !== null && board[midRow][midCol] !== currentPlayer;
         if (board[toRow][toCol] === null && isOpponentPiece) {
             console.log("Valid capture move.");
             return true;
@@ -178,9 +215,13 @@ function isValidMove(fromRow, fromCol, toRow, toCol) {
         }
     }
 
+    // If neither a valid regular move nor a valid capture move, then it's not valid
     console.log("Move is not valid.");
     return false;
 }
+
+
+
 
 
 
@@ -191,12 +232,18 @@ function isInsideBoard(row, col) {
 }
 
 
+
+
+
 function resetGame() {
     selectedPiece = null;
     currentPlayer = 'red';
     createBoard();
     updateGameStatus();
 }
+
+
+
 
 
 
@@ -227,6 +274,13 @@ function movePiece(fromRow, fromCol, toRow, toCol) {
 }
 
 
+
+
+
+
+
+
+
 function removePieceFromBoard(row, col) {
     const square = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
     if (square) {
@@ -235,11 +289,14 @@ function removePieceFromBoard(row, col) {
     }
 }
 
+
+
+
+
+
 function updatePieceOnBoard(fromRow, fromCol, toRow, toCol) {
     const squareFrom = document.querySelector(`[data-row="${fromRow}"][data-col="${fromCol}"]`);
     const squareTo = document.querySelector(`[data-row="${toRow}"][data-col="${toCol}"]`);
-
-    console.log(`Updating piece on board from (${fromRow}, ${fromCol}) to (${toRow}, ${toCol})`);
 
     if (!squareFrom || !squareTo) {
         console.error('Error: Square not found in DOM');
@@ -247,13 +304,16 @@ function updatePieceOnBoard(fromRow, fromCol, toRow, toCol) {
     }
 
     const piece = squareFrom.querySelector('.piece');
-    if (!piece) {
+    if (piece) {
+        squareTo.appendChild(piece);
+    } else {
         console.error('Error: Piece not found in DOM');
-        return;
     }
-
-    squareTo.appendChild(piece);
 }
+
+
+
+
 
 
 function kingPiece(row, col) {
@@ -262,11 +322,20 @@ function kingPiece(row, col) {
     piece.classList.add('king');
 }
 
+
+
+
+
+
 function togglePlayer() {
     currentPlayer = currentPlayer === 'red' ? 'black' : 'red';
     console.log(`Player toggled: ${currentPlayer}`);
     updateGameStatus();
 }
+
+
+
+
 
 function updateGameStatus() {
     const statusDiv = document.getElementById('gameStatus');
