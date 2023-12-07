@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Checkers</title>
-    <link rel="stylesheet" href="css/game.css">
+    <title>Checkers Game</title>
+    <link rel="stylesheet" type="text/css" href="assets/style.css">
 </head>
 <body>
     <header>
-        <img class="site-logo" src="img/fresnostate.png" alt="Fresno State Logo">
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="help.html">Help</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="leaderboard.html">Leaderboard</a></li>
+            </ul>
+        </nav>
     </header>
-    <nav>
-        <a href="index.html">Quit</a>    
-    </nav>
+
     <h1>Checkers Game</h1>
     <div id="gameOptions">
         <label for="boardSize">Board Size:</label>
@@ -30,7 +34,7 @@
             <option value="red">Red</option>
         </select>
     </div>
-    <button id="createGameButton" onclick="createBoard()">Create Game</button>
+    <button id="startButton">Start Game</button>
     <button id="resetButton" onclick="resetGame()">Reset Game</button>
     <div id="gameStatus"></div>
     <div id="checkerboard" class="checkerboard"></div>
@@ -38,7 +42,7 @@
     <footer>
         <p>&copy; 2023 Checkers Game Project by Youssif Alakwaa & Jose Nieblas</p>
     </footer>
-    
-    <script src="js/game.js"></script>
+
+    <script src="assets/script.js"></script>
 </body>
 </html>

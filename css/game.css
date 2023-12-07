@@ -1,25 +1,30 @@
-/* elements */
-*{
+/* Global elements */
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-html, body{
-    height: 100%;
+html, body {
+    min-height: 100%;
     font-family: 'Helvetica', 'Arial', sans-serif;
     background-color: #ced1d4;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Ensures footer stays at bottom */
 }
-header{
+header {
     width: 100%;
     text-align: center;
     padding-top: 20px;
 }
-nav{
+nav {
     width: 15%;
     text-align: center;
     display: flex;
     flex-direction: column;
-    margin: 1% auto;
+    margin: auto; /* Centering the nav */
 }
-a{
+a {
     text-decoration: none;
     color: #b1102b;
     font-size: 2vw;
@@ -28,21 +33,97 @@ a{
     border-radius: 4px;
     padding: 5px;
     margin-top: 5px;
- 
 }
-a:hover{
+a:hover {
     color: #13284c;
     background-color: #b1102b;
     border: 3px solid #13284c;
     border-radius: 4px;
 }
-h1{
+h1 {
     font-size: 2vw;
-    margin: 10px;
+    margin: 0 auto; /* Centering horizontally */
+    text-align: center; /* Centering text within the element */
 }
-/* class */
-.site-logo{
+
+/* Classes */
+.site-logo {
     width: 15%;
     height: 15%;
 }
-/* id */
+
+/* Game specific styles */
+#checkerboard {
+    display: grid;
+    margin: 0 auto; /* Centering the checkerboard */
+    border: 2px solid black;
+}
+
+.square {
+    width: 50px;
+    height: 50px;
+}
+
+.dark {
+    background-color: #b58863;
+}
+
+.light {
+    background-color: #f0d9b5;
+}
+
+.piece {
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    margin: auto;
+    position: relative;
+    top: 10%;
+}
+
+.red-piece {
+    background-color: red;
+}
+
+.black-piece {
+    background-color: black;
+}
+
+.king {
+    /* Add styles for king pieces */
+}
+
+/* Buttons */
+button {
+    background-color: #13284c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 10px auto; /* Centering the buttons */
+    display: block; /* Make buttons block level for auto margins to work */
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #b1102b;
+}
+
+#gameOptions, #gameStatus {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+footer {
+    background-color: #13284c;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+footer p {
+    margin: 10px 0;
+}
