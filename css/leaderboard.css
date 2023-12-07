@@ -57,9 +57,6 @@ tr,td,th{
 }
 td{
     color: #ced1d4;
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
 }
 form{
     width: 100%;
@@ -78,9 +75,6 @@ input{
 input:hover{
     background-color: #13284c;
     color: #ced1d4;
-=======
->>>>>>> 87309862d12d4189560a4cc7b94abe31f0968aa0
->>>>>>> Stashed changes
 }
 /* class */
 .site-logo{

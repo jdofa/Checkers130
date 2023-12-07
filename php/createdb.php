@@ -45,15 +45,7 @@ if ($conn->query($sql) === FALSE) {
 }
 
 // Create Global Leaderboard Table
-<<<<<<< Updated upstream
-$sql = "CREATE TABLE IF NOT EXISTS GlobalBoard (Username VARCHAR(100), Password VARCHAR(100), GamesPlayed INT(100))";
-=======
-<<<<<<< HEAD
 $sql = "CREATE TABLE IF NOT EXISTS GlobalBoard (Username VARCHAR(100), Password VARCHAR(100), GamesPlayed INT(100), GamesWon INT(100), TimePlayed TIME)";
-=======
-$sql = "CREATE TABLE IF NOT EXISTS GlobalBoard (Username VARCHAR(100), Password VARCHAR(100), GamesPlayed INT(100))";
->>>>>>> 87309862d12d4189560a4cc7b94abe31f0968aa0
->>>>>>> Stashed changes
 if ($conn->query($sql) === FALSE) {
     echo "Error Creating Global Leaderboard Table: " . $conn->error;
     $error = TRUE;
@@ -110,28 +102,12 @@ if ($conn->query($sql) === FALSE) {
     $error = TRUE;
 }
 // dolfo Game 2
-<<<<<<< Updated upstream
-$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('dolfo', 'password1', 'Rodolfo', 1, 0, '00:05:11')";
-=======
-<<<<<<< HEAD
 $sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('dolfo', 'password1', 'Rodolfo', 1, 1, '00:05:11')";
-=======
-$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('dolfo', 'password1', 'Rodolfo', 1, 0, '00:05:11')";
->>>>>>> 87309862d12d4189560a4cc7b94abe31f0968aa0
->>>>>>> Stashed changes
 if ($conn->query($sql) === FALSE) {
     echo "Error Inserting Record: " . $conn->error;
     $error = TRUE;
 }
-<<<<<<< Updated upstream
-$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('dolfo', 'password1', 'Oflodor', 1, 1, '00:05:11')";
-=======
-<<<<<<< HEAD
 $sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('dolfo', 'password1', 'Oflodor', 1, 0, '00:05:11')";
-=======
-$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('dolfo', 'password1', 'Oflodor', 1, 1, '00:05:11')";
->>>>>>> 87309862d12d4189560a4cc7b94abe31f0968aa0
->>>>>>> Stashed changes
 if ($conn->query($sql) === FALSE) {
     echo "Error Inserting Record: " . $conn->error;
     $error = TRUE;
@@ -172,28 +148,12 @@ if ($conn->query($sql) === FALSE) {
 }
 
 // Daniel Game 1
-<<<<<<< Updated upstream
-$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('daniel', 'password3', 'dantheman', 1, 1, '00:30:13')";
-=======
-<<<<<<< HEAD
 $sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('daniel', 'password3', 'dantheman', 1, 0, '00:30:13')";
-=======
-$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('daniel', 'password3', 'dantheman', 1, 1, '00:30:13')";
->>>>>>> 87309862d12d4189560a4cc7b94abe31f0968aa0
->>>>>>> Stashed changes
 if ($conn->query($sql) === FALSE) {
     echo "Error Inserting Record: " . $conn->error;
     $error = TRUE;
 }
-<<<<<<< Updated upstream
-$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('daniel', 'password3', 'bobthebuilder', 1, 0, '00:30:13')";
-=======
-<<<<<<< HEAD
 $sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('daniel', 'password3', 'bobthebuilder', 1, 1, '00:30:13')";
-=======
-$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('daniel', 'password3', 'bobthebuilder', 1, 0, '00:30:13')";
->>>>>>> 87309862d12d4189560a4cc7b94abe31f0968aa0
->>>>>>> Stashed changes
 if ($conn->query($sql) === FALSE) {
     echo "Error Inserting Record: " . $conn->error;
     $error = TRUE;
@@ -233,41 +193,17 @@ if ($conn->query($sql) === FALSE) {
 }
 
 //Populate Global Leaderboard Table
-<<<<<<< Updated upstream
-$sql = "INSERT INTO GlobalBoard (Username, Password, GamesPlayed) VALUES ('dolfo', 'password1', 3)";
-=======
-<<<<<<< HEAD
 $sql = "INSERT INTO GlobalBoard (Username, Password, GamesPlayed, GamesWon, TimePlayed) VALUES ('dolfo', 'password1', 3, 3, '00:23:06')";
-=======
-$sql = "INSERT INTO GlobalBoard (Username, Password, GamesPlayed) VALUES ('dolfo', 'password1', 3)";
->>>>>>> 87309862d12d4189560a4cc7b94abe31f0968aa0
->>>>>>> Stashed changes
 if ($conn->query($sql) === FALSE) {
     echo "Error Inserting Record: " . $conn->error;
     $error = TRUE;
 }
-<<<<<<< Updated upstream
-$sql = "INSERT INTO GlobalBoard (Username, Password, GamesPlayed) VALUES ('stanley', 'password2', 2)";
-=======
-<<<<<<< HEAD
 $sql = "INSERT INTO GlobalBoard (Username, Password, GamesPlayed, GamesWon, TimePlayed) VALUES ('stanley', 'password2', 2, 0, '00:32:59')";
-=======
-$sql = "INSERT INTO GlobalBoard (Username, Password, GamesPlayed) VALUES ('stanley', 'password2', 2)";
->>>>>>> 87309862d12d4189560a4cc7b94abe31f0968aa0
->>>>>>> Stashed changes
 if ($conn->query($sql) === FALSE) {
     echo "Error Inserting Record: " . $conn->error;
     $error = TRUE;
 }
-<<<<<<< Updated upstream
-$sql = "INSERT INTO GlobalBoard (Username, Password, GamesPlayed) VALUES ('daniel', 'password3', 4)";
-=======
-<<<<<<< HEAD
 $sql = "INSERT INTO GlobalBoard (Username, Password, GamesPlayed, GamesWon, TimePlayed) VALUES ('daniel', 'password3', 4, 2, '00:47:26')";
-=======
-$sql = "INSERT INTO GlobalBoard (Username, Password, GamesPlayed) VALUES ('daniel', 'password3', 4)";
->>>>>>> 87309862d12d4189560a4cc7b94abe31f0968aa0
->>>>>>> Stashed changes
 if ($conn->query($sql) === FALSE) {
     echo "Error Inserting Record: " . $conn->error;
     $error = TRUE;
