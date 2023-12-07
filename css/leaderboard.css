@@ -40,6 +40,23 @@ a:hover{
 h1{
     font-size: 2vw;
     margin: 10px;
+    color: #13284c;
+}
+table{
+    text-align: center;
+    background-color: #13284c;
+    color: #b1102b;
+    margin: auto;
+    font-size: 1.2vw;
+    border-collapse: collapse;
+    border: 3px dotted #b1102b;
+}
+tr,td,th{
+    border: 3px dotted #b1102b;
+    padding: 15px;
+}
+td{
+    color: #ced1d4;
 }
 /* class */
 .site-logo{
@@ -47,3 +64,8 @@ h1{
     height: 15%;
 }
 /* id */
+#leaderboard{
+    width: 50%;
+    margin: 20px auto;
+    text-align: center;
+}

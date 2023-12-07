@@ -20,23 +20,6 @@ nav{
     flex-direction: column;
     margin: 5% auto;
 }
-a{
-    text-decoration: none;
-    color: #b1102b;
-    font-size: 2vw;
-    border: 3px solid #13284c;
-    background-color: #13284c;
-    border-radius: 4px;
-    padding: 5px;
-    margin-top: 5px;
- 
-}
-a:hover{
-    color: #13284c;
-    background-color: #b1102b;
-    border: 3px solid #13284c;
-    border-radius: 4px;
-}
 h1{
     font-size: 2vw;
     margin: 10px;
@@ -45,5 +28,21 @@ h1{
 .site-logo{
     width: 15%;
     height: 15%;
+}
+.menu-button{
+    text-decoration: none;
+    color: #b1102b;
+    font-size: 2vw;
+    border: 3px solid #13284c;
+    background-color: #13284c;
+    border-radius: 4px;
+    padding: 5px;
+    margin-top: 5px;
+}
+.menu-button:hover{
+    color: #13284c;
+    background-color: #b1102b;
+    border: 3px solid #13284c;
+    border-radius: 4px;
 }
 /* id */
