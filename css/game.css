@@ -127,3 +127,17 @@ footer {
 footer p {
     margin: 10px 0;
 }
+
+
+.square:hover.player-red {
+    background-color: green; 
+}
+
+.square:hover.player-black {
+    background-color: red; 
+}
+
+
+.selected-square {
+    border: 3px solid yellow; 
+}

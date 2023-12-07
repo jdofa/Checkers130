@@ -7,11 +7,6 @@ let board = []; // 2D array to represent the board state
 
 
 
-
-
-
-
-
 function createBoard() {
     boardSize = parseInt(document.getElementById('boardSize').value);
     const player1Color = document.getElementById('player1Color').value;
@@ -55,31 +50,35 @@ function createBoard() {
 }
 
 
-
-
-
 function shouldPlacePiece(row, col, boardSize) {
     return (row + col) % 2 !== 0 && (row < 3 || row >= boardSize - 3);
 }
-
-
 
 
 function handleSquareClick(row, col) {
     console.log(`Square clicked: row ${row}, col ${col}, current player: ${currentPlayer}`);
     const pieceColor = board[row][col];
 
+    // Remove previous selection (if any)
+    const previouslySelected = document.querySelector('.selected-square');
+    if (previouslySelected) {
+        previouslySelected.classList.remove('selected-square');
+    }
+
     if (selectedPiece === null && pieceColor === currentPlayer) {
-        // Select piece if it belongs to the current player
         console.log("Piece selected");
         selectedPiece = { row, col };
+
+        // Add selection class to the clicked square
+        const clickedSquare = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+        if (clickedSquare) {
+            clickedSquare.classList.add('selected-square');
+        }
     } else if (selectedPiece) {
         if (selectedPiece.row === row && selectedPiece.col === col) {
-            // Deselect the piece if the same square is clicked
             console.log("Piece deselected");
             selectedPiece = null;
         } else if (isValidMove(selectedPiece.row, selectedPiece.col, row, col)) {
-            // Move the piece if a valid target square is clicked
             console.log("Moving piece");
             movePiece(selectedPiece.row, selectedPiece.col, row, col);
             selectedPiece = null; // Clear selected piece after move
@@ -89,9 +88,6 @@ function handleSquareClick(row, col) {
         }
     }
 }
-
-
-
 
 
 function isCaptureAvailable(player) {
@@ -107,10 +103,6 @@ function isCaptureAvailable(player) {
     }
     return false;
 }
-
-
-
-
 
 
 function canCaptureFrom(row, col) {
@@ -132,6 +124,7 @@ function canCaptureFrom(row, col) {
     return false;
 }
 
+
 function isValidCaptureMove(fromRow, fromCol, toRow, toCol) {
     const midRow = (fromRow + toRow) / 2;
     const midCol = (fromCol + toCol) / 2;
@@ -140,10 +133,6 @@ function isValidCaptureMove(fromRow, fromCol, toRow, toCol) {
            board[midRow][midCol] !== null && 
            board[midRow][midCol] !== currentPlayer;
 }
-
-
-
-
 
 
 function isCaptureMove(fromRow, fromCol, toRow, toCol) {
@@ -156,10 +145,6 @@ function isCaptureMove(fromRow, fromCol, toRow, toCol) {
            board[midRow][midCol] !== null && 
            board[midRow][midCol] !== currentPlayer;
 }
-
-
-
-
 
 
 function isValidMove(fromRow, fromCol, toRow, toCol) {
@@ -221,18 +206,9 @@ function isValidMove(fromRow, fromCol, toRow, toCol) {
 }
 
 
-
-
-
-
-
-
 function isInsideBoard(row, col) {
     return row >= 0 && row < boardSize && col >= 0 && col < boardSize;
 }
-
-
-
 
 
 function resetGame() {
@@ -243,10 +219,6 @@ function resetGame() {
 }
 
 
-
-
-
-
 function movePiece(fromRow, fromCol, toRow, toCol) {
     console.log(`Moving piece from (${fromRow}, ${fromCol}) to (${toRow}, ${toCol})`);
     const pieceColor = board[fromRow][fromCol];
@@ -254,6 +226,12 @@ function movePiece(fromRow, fromCol, toRow, toCol) {
     // Update the board array to reflect the piece's new position
     board[toRow][toCol] = pieceColor;
     board[fromRow][fromCol] = null;
+
+    // Clear the selection
+    const previouslySelected = document.querySelector('.selected-square');
+    if (previouslySelected) {
+        previouslySelected.classList.remove('selected-square');
+    }
 
     // Handle capture
     if (Math.abs(fromRow - toRow) === 2) {
@@ -274,13 +252,6 @@ function movePiece(fromRow, fromCol, toRow, toCol) {
 }
 
 
-
-
-
-
-
-
-
 function removePieceFromBoard(row, col) {
     const square = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
     if (square) {
@@ -288,10 +259,6 @@ function removePieceFromBoard(row, col) {
         if (piece) square.removeChild(piece);
     }
 }
-
-
-
-
 
 
 function updatePieceOnBoard(fromRow, fromCol, toRow, toCol) {
@@ -312,10 +279,6 @@ function updatePieceOnBoard(fromRow, fromCol, toRow, toCol) {
 }
 
 
-
-
-
-
 function kingPiece(row, col) 
 {
     const square = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
@@ -324,24 +287,33 @@ function kingPiece(row, col)
 }
 
 
-
-
-
-
-function togglePlayer() 
-{
+function togglePlayer() {
     currentPlayer = currentPlayer === 'red' ? 'black' : 'red';
     console.log(`Player toggled: ${currentPlayer}`);
     updateGameStatus();
+    updateHoverEffect(); // Add this line to update the hover effect
 }
 
 
-
+function updateHoverEffect() {
+    const squares = document.querySelectorAll('.square');
+    squares.forEach(square => {
+        square.classList.remove('player-red', 'player-black');
+        if (currentPlayer === 'red') {
+            square.classList.add('player-red');
+        } else if (currentPlayer === 'black') {
+            square.classList.add('player-black');
+        }
+    });
+}
 
 
 function updateGameStatus() {
     const statusDiv = document.getElementById('gameStatus');
     statusDiv.innerHTML = `Current Player: ${currentPlayer}`;
 }
+
+
+
 
 
