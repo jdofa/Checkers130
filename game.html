@@ -1,30 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Checkers</title>
-        <link rel="stylesheet" href="css/game.css">
-        <script src="js/game.js"></script>
-    </head>
-    <body>
-        <header>
-            <img class="site-logo" src="img/fresnostate.png" alt="Fresno State Logo">
-        </header>
-        <nav>
-            <a href="index.html">Quit</a>    
-        </nav>
-        <!-- Only modify this page and game.js, or you can add more files as needed. This is 
-        to ensure that we don't have merge conflicts. We need to dynamically create a game, so for now
-        use the button below to create a game. We need 8x8 and 10x10 boards. For now, just create a 8x8 board.
-        Also add pieces to the board. We need to be able to move the pieces, so make sure you can move the pieces.
-        The pieces should snap to the center of the square. On hover, highlight the square green if it is a valid move, highlight red
-        if the square is not a valid move. Delete pieces that die. In general just add all the rules to the game, and when a game is finished.
-        Just display a message saying which player won. The player on the bottom = player 1. The player on top = player 2.
-        Future tasks - keep in mind when coding
-        - Allow for singleplayer (second player is AI - just make random valid moves)
-        - Allow for pieces and the board to be different colors/textures. (dynamic css tags)
-        - Button that restarts game
-        -->
-        <button onclick="createGame()">Create Game</button>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title>Checkers</title>
+    <link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+    <header>
+        <img class="site-logo" src="img/fresnostate.png" alt="Fresno State Logo">
+    </header>
+    <nav>
+        <a href="index.html">Quit</a>    
+    </nav>
+    <h1>Checkers Game</h1>
+    <div id="gameOptions">
+        <label for="boardSize">Board Size:</label>
+        <select id="boardSize">
+            <option value="8" selected>8x8</option>
+            <option value="10">10x10</option>
+        </select>
+        <label for="player1Color">Player 1 Color:</label>
+        <select id="player1Color">
+            <option value="red">Red</option>
+            <option value="black">Black</option>
+        </select>
+        <label for="player2Color">Player 2 Color:</label>
+        <select id="player2Color">
+            <option value="black">Black</option>
+            <option value="red">Red</option>
+        </select>
+    </div>
+    <button id="createGameButton" onclick="createBoard()">Create Game</button>
+    <button id="resetButton" onclick="resetGame()">Reset Game</button>
+    <div id="gameStatus"></div>
+    <div id="checkerboard" class="checkerboard"></div>
+
+    <footer>
+        <p>&copy; 2023 Checkers Game Project by Youssif Alakwaa & Jose Nieblas</p>
+    </footer>
+    
+    <script src="js/game.js"></script>
+</body>
 </html>
