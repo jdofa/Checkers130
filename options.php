@@ -12,7 +12,7 @@
             <img class="site-logo" src="img/bulldog.png" alt="Fresno State Logo">
         </header>
         <nav>
-            <a href="index.html">Home</a>
+            <a href="index.php">Home</a>
             <a href="game.html">Start</a>
         </nav>
     </body>

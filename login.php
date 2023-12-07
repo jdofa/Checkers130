@@ -12,9 +12,9 @@
             <img class="site-logo" src="img/bulldog.png" alt="Fresno State Logo">
         </header>
         <nav>
-            <a href="index.html">Home</a>
+            <a href="index.php">Home</a>
         </nav>
-        <form method="post" action="php/login.php">
+        <form method="post" action="php/checklogin.php">
             <div class="form-section">
                 <label>Username:</label>
                 <input type="text" name="username" placeholder="Enter Username">

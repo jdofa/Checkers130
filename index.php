@@ -13,9 +13,9 @@
             <img class="site-logo" src="img/bulldog.png" alt="Fresno State Logo">
         </header>
         <nav>
-            <a class="menu-button" href="options.html">Start Game</a>
-            <a class="menu-button" href="login.html">Login</a>
-            <a class="menu-button" href="index.html">Logout</a>
+            <a class="menu-button" href="options.php">Start Game</a>
+            <a class="menu-button" href="login.php">Login</a>
+            <a class="menu-button" href="index.php">Logout</a>
             <a class="menu-button" href="leaderboard.php">Global Leaderboards</a>
             <a class="menu-button" href="help.html">Help</a>
             <a class="menu-button" href="contact.html">Contact Us</a>

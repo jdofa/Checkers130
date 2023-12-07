@@ -31,7 +31,7 @@ $records = $total[0]; //records is the number of rows in the table
             <img class="site-logo" src="img/bulldog.png" alt="Fresno State Logo">
         </header>
         <nav>
-            <a href="index.html">Home</a>
+            <a href="index.php">Home</a>
         </nav>
         <form>
             <input formaction="php/mostgamesplayed.php"  type="submit" value="Most Games Played">

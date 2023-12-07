@@ -214,6 +214,6 @@ $conn->close();
 
 // If no errors, redirect back to index.html
 if ($error == FALSE){
-    header("Location: ../index.html");
+    header("Location: ../index.php");
 }
 ?>
