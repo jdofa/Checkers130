@@ -10,7 +10,7 @@ html, body {
     background-color: #ced1d4;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Ensures footer stays at bottom */
+    justify-content: space-between; /* Ensures footer stays at the bottom */
 }
 header {
     width: 100%;

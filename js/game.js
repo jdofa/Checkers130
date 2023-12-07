@@ -316,7 +316,8 @@ function updatePieceOnBoard(fromRow, fromCol, toRow, toCol) {
 
 
 
-function kingPiece(row, col) {
+function kingPiece(row, col) 
+{
     const square = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
     const piece = square.querySelector('.piece');
     piece.classList.add('king');
@@ -327,7 +328,8 @@ function kingPiece(row, col) {
 
 
 
-function togglePlayer() {
+function togglePlayer() 
+{
     currentPlayer = currentPlayer === 'red' ? 'black' : 'red';
     console.log(`Player toggled: ${currentPlayer}`);
     updateGameStatus();
