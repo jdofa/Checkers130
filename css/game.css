@@ -130,7 +130,7 @@ footer p {
 
 
 .square:hover.player-red {
-    background-color: green; 
+    background-color: rgb(0, 0, 0); 
 }
 
 .square:hover.player-black {
