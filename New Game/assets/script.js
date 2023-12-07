@@ -52,268 +52,224 @@ function shouldPlacePiece(row, col, boardSize) {
 }
 
 function handleSquareClick(row, col) {
+    console.log(`Square clicked: row ${row}, col ${col}, current player: ${currentPlayer}`);
     const pieceColor = board[row][col];
 
-    if (selectedPiece === null) {
+    if (selectedPiece === null && pieceColor === currentPlayer) {
         // Select piece if it belongs to the current player
-        if (pieceColor === currentPlayer) {
-            selectedPiece = { row, col };
-        }
-    } else {
-        // Move piece if the move is valid
+        selectedPiece = { row, col };
+    } else if (selectedPiece && !(selectedPiece.row === row && selectedPiece.col === col)) {
+        // Attempt a move if a different square is clicked
         if (isValidMove(selectedPiece.row, selectedPiece.col, row, col)) {
             movePiece(selectedPiece.row, selectedPiece.col, row, col);
-            selectedPiece = null;
         } else {
             console.log("Invalid move");
         }
+        selectedPiece = null; // Clear selected piece after move attempt
     }
 }
+
+
+
+
+function isCaptureAvailable(player) {
+    for (let row = 0; row < boardSize; row++) {
+        for (let col = 0; col < boardSize; col++) {
+            if (board[row][col] === player) {
+                // Check all possible capture moves for this piece
+                if (canCaptureFrom(row, col)) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+function canCaptureFrom(row, col) {
+    // Assuming regular pieces can only move forward (up for red, down for black)
+    // Add additional checks for king pieces if implemented
+    const directions = [
+        { dr: -2, dc: -2 }, { dr: -2, dc: 2 },  // Directions for red or king
+        { dr: 2, dc: -2 }, { dr: 2, dc: 2 }     // Directions for black or king
+    ];
+
+    for (let dir of directions) {
+        const newRow = row + dir.dr;
+        const newCol = col + dir.dc;
+        if (isInsideBoard(newRow, newCol) && isValidCaptureMove(row, col, newRow, newCol)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function isValidCaptureMove(fromRow, fromCol, toRow, toCol) {
+    const midRow = (fromRow + toRow) / 2;
+    const midCol = (fromCol + toCol) / 2;
+
+    return board[toRow][toCol] === null && 
+           board[midRow][midCol] !== null && 
+           board[midRow][midCol] !== currentPlayer;
+}
+
+
+
+function isCaptureMove(fromRow, fromCol, toRow, toCol) {
+    const rowDiff = Math.abs(toRow - fromRow);
+    const colDiff = Math.abs(toCol - fromCol);
+    const midRow = (fromRow + toRow) / 2;
+    const midCol = (fromCol + toCol) / 2;
+
+    return rowDiff === 2 && colDiff === 2 && 
+           board[midRow][midCol] !== null && 
+           board[midRow][midCol] !== currentPlayer;
+}
+
+
+
+
+
+function isValidMove(fromRow, fromCol, toRow, toCol) {
+    console.log(`Checking valid move from (${fromRow}, ${fromCol}) to (${toRow}, ${toCol})`);
+    
+    // Check if the move is within the board boundaries
+    if (!isInsideBoard(toRow, toCol)) {
+        console.log("Move is outside board boundaries.");
+        return false;
+    }
+
+    // Regular move conditions: move diagonally to an adjacent empty square
+    const rowDiff = toRow - fromRow;
+    const colDiff = Math.abs(toCol - fromCol);
+    const isRegularMove = Math.abs(rowDiff) === 1 && colDiff === 1;
+    const isCaptureMove = Math.abs(rowDiff) === 2 && colDiff === 2;
+
+    if (isRegularMove) {
+        if (board[toRow][toCol] !== null) {
+            console.log("Destination square is not empty.");
+            return false;
+        }
+
+        // Check the direction of the move for non-king pieces
+        if ((currentPlayer === 'red' && rowDiff !== -1) || (currentPlayer === 'black' && rowDiff !== 1)) {
+            console.log("Invalid direction for regular move.");
+            return false;
+        }
+
+        console.log("Valid regular move.");
+        return true;
+    }
+
+    // Capture move conditions: jump over an opponent's piece into an empty square
+    if (isCaptureMove) {
+        const midRow = (fromRow + toRow) / 2;
+        const midCol = (fromCol + toCol) / 2;
+        const isOpponentPiece = board[midRow][midCol] !== null && board[midRow][midCol] !== currentPlayer;
+
+        if (board[toRow][toCol] === null && isOpponentPiece) {
+            console.log("Valid capture move.");
+            return true;
+        } else {
+            console.log("Invalid capture move.");
+            return false;
+        }
+    }
+
+    console.log("Move is not valid.");
+    return false;
+}
+
+
+
+
+
+function isInsideBoard(row, col) {
+    return row >= 0 && row < boardSize && col >= 0 && col < boardSize;
+}
+
+
+function resetGame() {
+    selectedPiece = null;
+    currentPlayer = 'red';
+    createBoard();
+    updateGameStatus();
+}
+
+
 
 function movePiece(fromRow, fromCol, toRow, toCol) {
+    console.log(`Moving piece from (${fromRow}, ${fromCol}) to (${toRow}, ${toCol})`);
     const pieceColor = board[fromRow][fromCol];
-    board[fromRow][fromCol] = null;
+
+    // Update the board array to reflect the piece's new position
     board[toRow][toCol] = pieceColor;
+    board[fromRow][fromCol] = null;
 
-    const squareFrom = document.querySelector(`[data-row="${fromRow}"][data-col="${fromCol}"]`);
-    const squareTo = document.querySelector(`[data-row="${toRow}"][data-col="${toCol}"]`);
-    const piece = squareFrom.querySelector('.piece');
-    squareTo.appendChild(piece);
-
-    // Check for captures
-    const capturedPiece = getCapturedPiece(fromRow, fromCol, toRow, toCol);
-    if (capturedPiece) {
-        const [capturedRow, capturedCol] = capturedPiece;
-        board[capturedRow][capturedCol] = null;
-        document.querySelector(`[data-row="${capturedRow}"][data-col="${capturedCol}"]`).removeChild(document.querySelector(`[data-row="${capturedRow}"][data-col="${capturedCol}"] .piece`));
+    // Handle capture
+    if (Math.abs(fromRow - toRow) === 2) {
+        const midRow = (fromRow + toRow) / 2;
+        const midCol = (fromCol + toCol) / 2;
+        board[midRow][midCol] = null; // Remove the captured piece from the board array
+        removePieceFromBoard(midRow, midCol); // Remove the captured piece visually
     }
 
-    // Check for win condition (for demo purposes, just check if a piece reaches the opposite end)
-    if (pieceColor === 'red' && toRow === 0) {
-        endGame('red');
-    } else if (pieceColor === 'black' && toRow === boardSize - 1) {
-        endGame('black');
+    updatePieceOnBoard(fromRow, fromCol, toRow, toCol); // Update the visual representation of the board
+
+    // Check for kinging
+    if ((pieceColor === 'red' && toRow === 0) || (pieceColor === 'black' && toRow === boardSize - 1)) {
+        kingPiece(toRow, toCol); // King the piece if it reaches the opposite end of the board
     }
 
-    togglePlayer();
+    togglePlayer(); // Switch to the other player after the move
 }
 
-function getCapturedPiece(fromRow, fromCol, toRow, toCol) {
-    // Check if there's a piece to capture during the move
-    const capturedRow = (fromRow + toRow) / 2;
-    const capturedCol = (fromCol + toCol) / 2;
 
-    if (Math.abs(fromRow - toRow) === 2 && Math.abs(fromCol - toCol) === 2 && board[capturedRow][capturedCol] !== null) {
-        return [capturedRow, capturedCol];
+function removePieceFromBoard(row, col) {
+    const square = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+    if (square) {
+        const piece = square.querySelector('.piece');
+        if (piece) square.removeChild(piece);
     }
-    return null;
+}
+
+function updatePieceOnBoard(fromRow, fromCol, toRow, toCol) {
+    const squareFrom = document.querySelector(`[data-row="${fromRow}"][data-col="${fromCol}"]`);
+    const squareTo = document.querySelector(`[data-row="${toRow}"][data-col="${toCol}"]`);
+
+    console.log(`Updating piece on board from (${fromRow}, ${fromCol}) to (${toRow}, ${toCol})`);
+
+    if (!squareFrom || !squareTo) {
+        console.error('Error: Square not found in DOM');
+        return;
+    }
+
+    const piece = squareFrom.querySelector('.piece');
+    if (!piece) {
+        console.error('Error: Piece not found in DOM');
+        return;
+    }
+
+    squareTo.appendChild(piece);
+}
+
+
+function kingPiece(row, col) {
+    const square = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+    const piece = square.querySelector('.piece');
+    piece.classList.add('king');
 }
 
 function togglePlayer() {
     currentPlayer = currentPlayer === 'red' ? 'black' : 'red';
+    console.log(`Player toggled: ${currentPlayer}`);
     updateGameStatus();
 }
 
 function updateGameStatus() {
     const statusDiv = document.getElementById('gameStatus');
     statusDiv.innerHTML = `Current Player: ${currentPlayer}`;
-}
-
-function endGame(winner) {
-    const statusDiv = document.getElementById('gameStatus');
-    statusDiv.innerHTML = `Winner: ${winner}`;
-    // Disable further clicks to end the game
-    document.getElementById('checkerboard').removeEventListener('click', handleSquareClick);
-}
-
-
-
-
-// Define the maximum depth for the minimax algorithm (controls the AI's level of thinking)
-const MAX_DEPTH = 4;
-
-function aiPlayerMove() {
-    const bestMove = minimax(board, MAX_DEPTH, currentPlayer, -Infinity, Infinity, true);
-    
-    if (bestMove) {
-        const [fromRow, fromCol, toRow, toCol] = bestMove;
-        // Simulate a click on the selected squares to move the piece
-        handleSquareClick(fromRow, fromCol);
-        handleSquareClick(toRow, toCol);
-    } else {
-        // AI cannot make any moves, game over
-        endGame(currentPlayer === 'red' ? 'black' : 'red');
-    }
-}
-
-function minimax(board, depth, player, alpha, beta, maximizingPlayer) {
-    if (depth === 0 || isGameOver(board)) {
-        // Evaluate the board and return its value
-        return evaluateBoard(board, player);
-    }
-
-    const validMoves = getAllValidMoves(board, player);
-
-    if (maximizingPlayer) {
-        let maxEval = -Infinity;
-        let bestMove = null;
-        for (const move of validMoves) {
-            const [fromRow, fromCol, toRow, toCol] = move;
-            const boardCopy = cloneBoard(board);
-            makeMove(boardCopy, fromRow, fromCol, toRow, toCol);
-            const eval = minimax(boardCopy, depth - 1, player, alpha, beta, false);
-            if (eval > maxEval) {
-                maxEval = eval;
-                bestMove = move;
-            }
-            alpha = Math.max(alpha, eval);
-            if (beta <= alpha) {
-                break;
-            }
-        }
-        return bestMove;
-    } else {
-        let minEval = Infinity;
-        for (const move of validMoves) {
-            const [fromRow, fromCol, toRow, toCol] = move;
-            const boardCopy = cloneBoard(board);
-            makeMove(boardCopy, fromRow, fromCol, toRow, toCol);
-            const eval = minimax(boardCopy, depth - 1, player, alpha, beta, true);
-            minEval = Math.min(minEval, eval);
-            beta = Math.min(beta, eval);
-            if (beta <= alpha) {
-                break;
-            }
-        }
-        return minEval;
-    }
-}
-
-function getAllValidMoves(board, player) {
-    const validMoves = [];
-
-    // Iterate through the board to find valid moves
-    for (let row = 0; row < board.length; row++) {
-        for (let col = 0; col < board[row].length; col++) {
-            if (board[row][col] === player) {
-                // Check for valid moves for the player's pieces
-                const moves = getValidMovesForPiece(board, row, col, player);
-                validMoves.push(...moves);
-            }
-        }
-    }
-
-    return validMoves;
-}
-
-
-function getValidMovesForPiece(board, row, col, player) {
-    const validMoves = [];
-
-    // Check diagonal moves for regular pieces
-    if (player === 'red' || isKing(board, row, col)) {
-        // Check top-left move
-        if (isValidMove(board, row, col, row - 1, col - 1)) {
-            validMoves.push([row, col, row - 1, col - 1]);
-        }
-        // Check top-right move
-        if (isValidMove(board, row, col, row - 1, col + 1)) {
-            validMoves.push([row, col, row - 1, col + 1]);
-        }
-    }
-
-    // Check diagonal moves for king pieces
-    if (player === 'black' || isKing(board, row, col)) {
-        // Check bottom-left move
-        if (isValidMove(board, row, col, row + 1, col - 1)) {
-            validMoves.push([row, col, row + 1, col - 1]);
-        }
-        // Check bottom-right move
-        if (isValidMove(board, row, col, row + 1, col + 1)) {
-            validMoves.push([row, col, row + 1, col + 1]);
-        }
-    }
-
-    return validMoves;
-}
-
-function isValidMove(board, fromRow, fromCol, toRow, toCol) {
-    const numRows = board.length;
-    const numCols = board[0].length;
-
-    // Check if the destination square is within the board boundaries
-    if (toRow < 0 || toRow >= numRows || toCol < 0 || toCol >= numCols) {
-        return false;
-    }
-
-    // Check if the destination square is empty
-    if (board[toRow][toCol] !== null) {
-        return false;
-    }
-
-    // Determine the direction of movement (forward or backward)
-    const rowDiff = toRow - fromRow;
-    const colDiff = Math.abs(toCol - fromCol);
-
-    // Regular pieces can only move forward
-    if (rowDiff === 1 && colDiff === 1) {
-        return true;
-    }
-
-    // King pieces can move both forward and backward
-    if (rowDiff === 1 && colDiff === 1) {
-        return true;
-    }
-
-    return false;
-}
-
-
-function isGameOver(board) {
-    const redValidMoves = getAllValidMoves(board, 'red');
-    const blackValidMoves = getAllValidMoves(board, 'black');
-
-    return redValidMoves.length === 0 || blackValidMoves.length === 0;
-}
-
-
-function evaluateBoard(board, player) {
-    const numRedPieces = countPieces(board, 'red');
-    const numBlackPieces = countPieces(board, 'black');
-
-    if (player === 'red') {
-        return numRedPieces - numBlackPieces;
-    } else {
-        return numBlackPieces - numRedPieces;
-    }
-}
-
-function countPieces(board, player) {
-    let count = 0;
-    for (let row = 0; row < board.length; row++) {
-        for (let col = 0; col < board[row].length; col++) {
-            if (board[row][col] === player) {
-                count++;
-            }
-        }
-    }
-    return count;
-}
-
-
-function cloneBoard(board) {
-    const clone = [];
-    for (let row = 0; row < board.length; row++) {
-        clone.push([...board[row]]);
-    }
-    return clone;
-}
-
-
-function makeMove(board, fromRow, fromCol, toRow, toCol) {
-    const piece = board[fromRow][fromCol];
-    board[fromRow][fromCol] = null;
-    board[toRow][toCol] = piece;
 }
 
 

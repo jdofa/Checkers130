@@ -20,7 +20,7 @@
     <div id="gameOptions">
         <label for="boardSize">Board Size:</label>
         <select id="boardSize">
-            <option value="8">8x8</option>
+            <option value="8" selected>8x8</option>
             <option value="10">10x10</option>
         </select>
         <label for="player1Color">Player 1 Color:</label>
@@ -35,9 +35,9 @@
         </select>
     </div>
     <button id="startButton">Start Game</button>
-    <button id="resetButton">Reset Game</button>
+    <button id="resetButton" onclick="resetGame()">Reset Game</button>
     <div id="gameStatus"></div>
-    <div id="checkerboard"></div>
+    <div id="checkerboard" class="checkerboard"></div>
 
     <footer>
         <p>&copy; 2023 Checkers Game Project by Youssif Alakwaa & Jose Nieblas</p>
