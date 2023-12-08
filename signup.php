@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -22,6 +25,10 @@
             <div class="form-section">
                 <label>Password:</label>
                 <input type="password" name="password" placeholder="Create Password">
+            </div>
+            <div class="form-section">
+                <label>Confirm Password:</label>
+                <input type="password" name="password2" placeholder="Confirm Password">
             </div>
             <div class="form-section">
                 <input formaction="php/createaccount.php" type="submit" value="Create Account">

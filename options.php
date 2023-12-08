@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['loggedin'])){
+    $_SESSION['loggedin'] = false;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,6 +16,12 @@
         <header>
             <img class="site-logo" src="img/fresnostate.png" alt="Fresno State Logo">
             <h1>CSCI 130: Checkers Project</h1>
+            <?php 
+                if (isset($_SESSION['username'])){
+                    $name = $_SESSION['username'];
+                    echo "<h1 id='username'>Welcome $name!</h1>";
+                }
+            ?>
             <img class="site-logo" src="img/bulldog.png" alt="Fresno State Logo">
         </header>
         <nav>

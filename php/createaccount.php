@@ -14,6 +14,8 @@ if ($conn->connect_error) {
     $error = TRUE;
 }
 
+//Unset session variables and set them as we check if user exists, or if password does not match
+
 // Get username and password from login form
 $username = $_POST['username'];
 $password = $_POST['password'];

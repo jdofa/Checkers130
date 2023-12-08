@@ -18,10 +18,10 @@ if (!isset($_SESSION['loggedin'])){
             <img class="site-logo" src="img/fresnostate.png" alt="Fresno State Logo">
             <h1>CSCI 130: Checkers Project</h1>
             <?php 
-            if (isset($_SESSION['username'])){
-                $name = $_SESSION['username'];
-                echo "<h1 id='username'>Welcome $name!</h1>";
-            }
+                if (isset($_SESSION['username'])){
+                    $name = $_SESSION['username'];
+                    echo "<h1 id='username'>Welcome $name!</h1>";
+                }
             ?>
             <img class="site-logo" src="img/bulldog.png" alt="Fresno State Logo">
         </header>
@@ -43,9 +43,13 @@ if (!isset($_SESSION['loggedin'])){
             ?>
             <a class="menu-button" href="help.html">Help</a>
             <a class="menu-button" href="contact.html">Contact Us</a>
-            <form method="post" action="php/createdb.php">
-                <input class="menu-button" type="submit" value="Create Database">
-            </form>
+            <?php //Hide Database Creation Button if pressed
+                if (!isset($_SESSION['databaseCreated'])){
+                    echo '<form method="post" action="php/createdb.php">';
+                    echo '<input class="menu-button" type="submit" value="Create Database">';
+                    echo '</form>';
+                }
+            ?>
         </nav>
     </body>
 </html>

@@ -1,4 +1,6 @@
 <?php
+session_start();
+$_SESSION['databaseCreated'] = true;
 
 $servername = "localhost";
 $username = "root";

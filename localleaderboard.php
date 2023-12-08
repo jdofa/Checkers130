@@ -30,6 +30,12 @@ $records = $total[0]; //records is the number of rows in the table
         <header>
             <img class="site-logo" src="img/fresnostate.png" alt="Fresno State Logo">
             <h1>CSCI 130: Checkers Project</h1>
+            <?php 
+                if (isset($_SESSION['username'])){
+                    $name = $_SESSION['username'];
+                    echo "<h1 id='username'>Welcome $name!</h1>";
+                }
+            ?>
             <img class="site-logo" src="img/bulldog.png" alt="Fresno State Logo">
         </header>
         <nav>
