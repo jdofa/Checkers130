@@ -629,23 +629,29 @@ function makeBotMove() {
 }
 
 
-//oggles between players and handles bot moves.
+// Toggles between players and handles bot moves.
 function togglePlayer() {
-    if (currentPlayer === 'bot') {
-        // After bot's turn, switch to red
-        currentPlayer = 'red';
-        isBotMoveMade = false; // Reset bot move flag
-    } else {
-        // If it's red's turn, switch to bot and check if a move is to be made
-        currentPlayer = 'bot';
-        if (!isBotMoveMade) {
-            setTimeout(makeBotMove, 500);
+    if (gameMode === 'bot') {
+        if (currentPlayer === 'bot') {
+            // After bot's turn, switch to red
+            currentPlayer = 'red';
+            isBotMoveMade = false; // Reset bot move flag
+        } else {
+            // If it's red's turn, switch to bot and check if a move is to be made
+            currentPlayer = 'bot';
+            if (!isBotMoveMade) {
+                setTimeout(makeBotMove, 500);
+            }
         }
+    } else if (gameMode === 'human') {
+        // In human mode, just switch between red and black
+        currentPlayer = (currentPlayer === 'red') ? 'black' : 'red';
     }
 
     console.log(`Player toggled: ${currentPlayer}`);
     updateGameStatus();
 }
+
 
 
 //Implements the minimax algorithm for selecting the best move for the bot.
@@ -788,9 +794,13 @@ function findCaptureMoves(row, col, player) {
     return captureMoves;
 }
 
+let gameMode = 'human'; // Default to 'human' mode
+
 
 document.getElementById('opponentType').addEventListener('change', function() {
+    gameMode = this.value; // Correctly set the game mode
     let opponentType = this.value;
+    gameMode = opponentType; // Set game mode to either 'bot' or 'human'
 
     // Reset the game state to initial conditions
     resetGame();
@@ -801,6 +811,7 @@ document.getElementById('opponentType').addEventListener('change', function() {
     // Reinitialize the board with the new settings
     createBoard();
 });
+
 
 
 function resetGame() {
