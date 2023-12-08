@@ -601,15 +601,12 @@ let isBotMoveMade = false;
 
 // Initiates the bot's move, including selecting the best move using the minimax algorithm.
 function makeBotMove() {
-    console.log("makeBotMove called, currentPlayer:", currentPlayer);
-
     if (currentPlayer !== 'bot' || isBotMoveMade) {
-        return; // Exit if it's not the bot's turn or a move has already been made
+        console.log("Not the bot's turn or a move has already been made.");
+        return;
     }
 
     let legalMoves = findAllLegalMoves(BOT_COLOR);
-    console.log("[Bot Move] Legal moves found:", legalMoves);
-
     if (legalMoves.length === 0) {
         console.log("[Bot Move] Bot has no moves. Player wins!");
         isGameOver = true;
@@ -618,39 +615,73 @@ function makeBotMove() {
     }
 
     let bestMove = selectBestMove(legalMoves);
-    console.log("[Bot Move] Selected move:", bestMove);
-
     setTimeout(() => {
         movePiece(bestMove.fromRow, bestMove.fromCol, bestMove.toRow, bestMove.toCol);
-        isBotMoveMade = true; // Mark that the bot has made its move
-        togglePlayer(); // Switch to the other player
-        updateGameStatus();
+        console.log(`Bot moved...`);
+        setTimeout(handleBotMoveCompletion, 200); // Slight delay before completion
     }, 500);
 }
+
+function handleBotMoveCompletion() {
+    isBotMoveMade = true;
+    checkGameState(); // Call a new function to check the game state
+}
+
+
 
 
 // Toggles between players and handles bot moves.
 function togglePlayer() {
     if (gameMode === 'bot') {
+        currentPlayer = (currentPlayer === 'red') ? 'bot' : 'red';
+        console.log(`Player toggled to: ${currentPlayer}`);
         if (currentPlayer === 'bot') {
-            // After bot's turn, switch to red
-            currentPlayer = 'red';
-            isBotMoveMade = false; // Reset bot move flag
-        } else {
-            // If it's red's turn, switch to bot and check if a move is to be made
-            currentPlayer = 'bot';
-            if (!isBotMoveMade) {
-                setTimeout(makeBotMove, 500);
-            }
+            isBotMoveMade = false; // Reset the flag for the bot's next move
+            setTimeout(makeBotMove, 1000); // Initiate bot's move after a delay for UX
         }
-    } else if (gameMode === 'human') {
+    } else {
         // In human mode, just switch between red and black
         currentPlayer = (currentPlayer === 'red') ? 'black' : 'red';
     }
-
-    console.log(`Player toggled: ${currentPlayer}`);
-    updateGameStatus();
+    updateGameStatus(); // Always update game status after toggling
 }
+
+
+
+function switchPlayer() {
+    if (currentPlayer === 'bot') {
+        currentPlayer = 'red';
+        isBotMoveMade = false; // Reset for the next turn
+    } else {
+        currentPlayer = 'bot';
+    }
+    // Update the game UI to reflect the current player
+}
+
+
+
+function checkGameState() {
+    if (isGameOver) {
+        console.log("Game over. No further moves.");
+        return;
+    }
+    if (isBotMoveMade && currentPlayer === 'bot') {
+        togglePlayer(); // Only toggle player if it was the bot's turn and it made a move
+    }
+}
+
+
+
+
+
+
+
+// Additional function to be called when the bot move is completed
+function botMoveCompleted() {
+    isBotMoveMade = true; // Mark bot move as completed
+    togglePlayer(); // Toggle player after bot move completion
+}
+
 
 
 
