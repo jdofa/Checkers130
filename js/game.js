@@ -828,6 +828,3 @@ function resetGame() {
     // Recreate the board with the current settings
     createBoard();
 }
-
-
-
