@@ -56,12 +56,16 @@ h1 {
 #checkerboard {
     display: grid;
     margin: 0 auto; /* Centering the checkerboard */
-    border: 2px solid black;
+    border: 2px solid grey; /* Updated to grey border */
 }
 
 .square {
     width: 50px;
     height: 50px;
+    border: 1px solid #333; /* Border to distinguish squares */
+    display: flex;     /* Flexbox for centering content */
+    justify-content: center; /* Center content horizontally */
+    align-items: center;     /* Center content vertically */
 }
 
 .dark {
@@ -90,7 +94,19 @@ h1 {
 }
 
 .king {
-    /* Add styles for king pieces */
+    border: 2px solid gold; /* Add a golden border for king pieces */
+    box-shadow: 0 0 10px gold; /* Optional: Add a glow effect */
+}
+
+
+
+/* Hover effect styles for squares based on current player */
+.player-red-hover .square:hover {
+    border: 2px solid red; /* Red border for red player's turn */
+}
+
+.player-black-hover .square:hover {
+    border: 2px solid black; /* Black border for black player's turn */
 }
 
 /* Buttons */
@@ -128,45 +144,6 @@ footer p {
     margin: 10px 0;
 }
 
-
-.square:hover.player-red {
-    background-color: rgb(0, 0, 0); 
-}
-
-.square:hover.player-black {
-    background-color: red; 
-}
-
-
-.selected-square {
-    border: 3px solid yellow; 
-}
-
-
-.possible-move {
-    background-color: rgba(0, 255, 0, 0.3); 
-}
-
-
-.square {
-    width: 50px;       /* Size of the square */
-    height: 50px;      /* Size of the square */
-    border: 1px solid #333; /* Border to distinguish squares */
-    display: flex;     /* Flexbox for centering content */
-    justify-content: center; /* Center content horizontally */
-    align-items: center;     /* Center content vertically */
-}
-
-/* Additional styles for dark and light squares */
-.square.light {
-    background-color: #f0d9b5; /* Light color for square */
-}
-
-.square.dark {
-    background-color: #b58863; /* Dark color for square */
-}
-
-/* Style for highlighting a selected square */
 .selected-square {
     border: 3px solid yellow; /* Highlighting border */
 }
@@ -180,23 +157,59 @@ footer p {
     background-color: rgba(255, 0, 0, 0.3); /* Semi-transparent red */
 }
 
-
 #gameInfo {
-    margin: 20px;
-    padding: 10px;
+    margin: 10px auto; /* Center the box horizontally */
+    padding: 5px; /* Reduced padding */
     background-color: #f2f2f2; /* Light grey background */
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
     text-align: center; /* Center the text inside each element */
     color: #333; /* Dark grey text for readability */
     font-family: Arial, sans-serif; /* A standard font */
+    width: 200px; /* Set a fixed width for a square shape */
 }
 
 #gameInfo p {
-    margin: 10px 0; /* Space out each piece of info */
+    margin: 5px 0; /* Reduced margin */
     font-size: 16px; /* A readable font size */
 }
 
 #gameInfo span {
     font-weight: bold; /* Make the dynamic parts (like the time and counts) stand out */
 }
+
+#gameStatus {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.game-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.game-info p {
+    margin: 0;
+    font-size: 16px;
+}
+
+.game-info span {
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+
+.button-container {
+    text-align: center; /* Center its children horizontally */
+}
+
+button {
+    display: inline-block; /* Display buttons inline */
+    margin-right: 10px; /* Add some spacing between buttons */
+}
+
+
+

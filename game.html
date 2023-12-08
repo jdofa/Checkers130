@@ -15,6 +15,11 @@
     <h1>Checkers Game</h1>
     
     <div id="gameOptions">
+        <label for="opponentType">Opponent:</label>
+        <select id="opponentType">
+            <option value="human">Human</option>
+            <option value="bot">Bot</option>
+        </select>
         <label for="boardSize">Board Size:</label>
         <select id="boardSize">
             <option value="8" selected>8x8</option>
@@ -31,21 +36,23 @@
             <option value="red">Red</option>
         </select>
     </div>
-    <button id="createGameButton" onclick="createBoard()">Create Game</button>
-    <button id="resetButton" onclick="resetGame()">Reset Game</button>
-    <div id="gameStatus"></div>
-    <div id="checkerboard" class="checkerboard"></div>
+    <div class="button-container">
+        <button id="createGameButton" onclick="createBoard()">Create Game</button>
+        <button id="resetButton" onclick="resetGame()">Reset Game</button>
+    </div>
+    
 
-    <div id="gameInfo">
+    <div class="game-info" id="gameInfo">
         <p>Time Elapsed: <span id="timeElapsed">0:00</span></p>
         <p>Red Pieces: <span id="redPiecesCount">12</span></p>
         <p>Black Pieces: <span id="blackPiecesCount">12</span></p>
     </div>
-
+    
+    <div id="gameStatus">Starting the game...</div>
+    <div id="checkerboard" class="checkerboard"></div>
     <footer>
         <p>&copy; 2023 Checkers Game Project by Youssif Alakwaa & Jose Nieblas</p>
     </footer>
-    
 
     <script src="js/game.js"></script>
 </body>
