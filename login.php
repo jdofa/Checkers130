@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -26,6 +29,15 @@
             <div class="form-section">
                 <input formaction="php/checklogin.php" type="submit" value="Log In">
             </div>
+            <?php
+                if (isset($_SESSION['wronguser']) && $_SESSION['wronguser'] == true){
+                    echo "<p>User does not exist.</p>";
+                }
+                if (isset($_SESSION['wrongpswd']) && $_SESSION['wrongpswd'] == true){
+                    echo "<p>Incorrect password.</p>";
+                }
+            ?>
         </form>
+
     </body>
 </html>
