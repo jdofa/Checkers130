@@ -33,6 +33,16 @@ session_start();
             <div class="form-section">
                 <input formaction="php/createaccount.php" type="submit" value="Create Account">
             </div>
+            <div class="form-section">
+                <?php
+                    if (isset($_SESSION['userExists'])){
+                        echo "<p>Username already exists.</p>";
+                    }
+                    if (isset($_SESSION['badMatch'])){
+                        echo "<p>Passwords do not match.</p>";
+                    }
+                ?>
+            </div>
         </form>
     </body>
 </html>

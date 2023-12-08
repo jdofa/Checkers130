@@ -4,6 +4,20 @@ if (!isset($_SESSION['loggedin'])){
     $_SESSION['loggedin'] = false;
 }
 
+//Unset session variables, to maintain consistency
+//Essentially clearing all error msgs once user leaves login/signup page
+if (isset($_SESSION['wronguser'])){
+    unset($_SESSION['wronguser']);
+}
+if (isset($_SESSION['wrongpswd'])){
+    unset($_SESSION['wrongpswd']);
+}
+if (isset($_SESSION['userExists'])){
+    unset($_SESSION['userExists']);
+}
+if (isset($_SESSION['badMatch'])){
+    unset($_SESSION['badMatch']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
