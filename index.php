@@ -27,16 +27,20 @@ if (!isset($_SESSION['loggedin'])){
         </header>
         <nav>
             <?php
+                //Logged In
                 if ($_SESSION['loggedin'] == true && isset($_SESSION['loggedin'])) {
                     echo '<a class="menu-button" href="options.php">Start Game</a>';
                     echo '<a class="menu-button" href="php/logout.php">Logout</a>';
+                    echo '<a class="menu-button" href="leaderboard.php">Global Leaderboard</a>';
+                    echo '<a class="menu-button" href="localleaderboard.php">Local Leaderboard</a>';
                 } 
+                //Logged Out
                 else{
                     echo '<a class="menu-button" href="login.php">Login</a>';
                     echo '<a class="menu-button" href="signup.php">Sign Up</a>';
+                    echo '<a class="menu-button" href="leaderboard.php">Global Leaderboard</a>';
                 }
             ?>
-            <a class="menu-button" href="leaderboard.php">Global Leaderboards</a>
             <a class="menu-button" href="help.html">Help</a>
             <a class="menu-button" href="contact.html">Contact Us</a>
             <form method="post" action="php/createdb.php">

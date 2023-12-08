@@ -25,6 +25,15 @@
                 </select>
             </div>
             <div class="form-section">
+                <label for="boardTheme">Board Theme:</label>
+                <select id="boardTheme">
+                    <option value="brown">Dark Brown / Light Brown</option>
+                    <option value="blue">Dark Blue / Light Blue</option>
+                    <option value="red">Dark Red / Light Red</option>
+                    <option value="green">Dark Green / Light Green</option>
+                </select>
+            </div>
+            <div class="form-section">
                 <label for="player1Name">Player 1 Name:</label>
                 <input type="text" id="player1Name" name="player1Name" placeholder="Enter Player 1 Name">
             </div>
@@ -47,10 +56,15 @@
                 </select>
             </div>
             <div class="form-section">
-                <input type="submit" value="Start Game">
+                <label for="gameMode">Game Mode:</label>
+                <select id="gameMode">
+                    <option value="singlePlayer">Single Player</option>
+                    <option value="multiPlayer">Multiplayer</option>
+                </select>
             </div>
-
-            <a href="game.html">Start</a>
+            <div class="form-section">
+                <input formaction="php/setoptions.php" type="submit" value="Start Game">
+            </div>
             </form>
         </section>
     </body>
