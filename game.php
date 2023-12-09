@@ -18,10 +18,12 @@ $gameMode = $_SESSION['gameMode'];
     <style>
         .red-piece {
             <?php echo "background-color: $player1Color;" ?>
+            margin-bottom: 100px;
         }
 
         .black-piece {
             <?php echo "background-color: $player2Color;" ?>
+            margin-bottom: 100px;
         }
         .dark {
             <?php echo "background-color: $boardColor1;" ?>
@@ -34,7 +36,7 @@ $gameMode = $_SESSION['gameMode'];
 </head>
 <body>
     <header>
-    <h1>Checkers Game</h1>
+    <h1>CSCI 130: Checkers Project</h1>
     <nav>
         <a href="index.php">Quit</a>
         <button onclick="endGame()">End Game - Player 1 Wins</button>
@@ -59,7 +61,7 @@ $gameMode = $_SESSION['gameMode'];
         </select>
     </div>
     <div class="button-container">
-        <button id="createGameButton" onclick="createBoard()">Start Game</button>
+        <button id="createGameButton" onclick="createBoard()">Start Game</button> 
         <button id="resetButton" onclick="resetGame()">Reset Game</button>
     </div>
     <div class="game-info" id="gameInfo">
@@ -67,17 +69,18 @@ $gameMode = $_SESSION['gameMode'];
         <p style="color: <?php echo $player1Color; ?>;">Player 1 Pieces: <span id="player1PiecesCount">12</span></p>
         <p style="color: <?php echo $player2Color; ?>;">Player 2 Pieces: <span id="player2PiecesCount">12</span></p>
     </div>
+    <h1 hidden="true" id="player1Move" style="font-size: 1vw;">Player 1 Moves First</h1>
     <div id="gameStatus" 
          data-player1-color="<?php echo htmlspecialchars($player1Color); ?>" 
          data-player2-color="<?php echo htmlspecialchars($player2Color); ?>">
         Starting the game...
     </div>
     <?php
-    echo "<p class='gameName' style='color: $player1Color;'> Player 1: $player1Name </p>";
+    echo "<p hidden='true' class='gameName' id='p1' style='color: $player1Color;'> Player 1: $player1Name </p>";
     ?>
     <div id="checkerboard" class="checkerboard"></div>
     <?php
-    echo "<p class='gameName' style='margin-bottom: 100px;color: $player2Color;'> Player 2: $player2Name </p>";
+    echo "<p hidden='true' class='gameName' id='p2' style='margin-bottom: 100px;color: $player2Color;'> Player 2: $player2Name </p>";
     ?>
     <script src="js/game.js"></script>
 </body>

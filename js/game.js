@@ -1,5 +1,3 @@
-document.getElementById('createGameButton').addEventListener('click', createBoard);
-
 let selectedPiece = null;
 let currentPlayer = 'red';
 let boardSize = 8; // Default board size
@@ -16,6 +14,12 @@ const BOT_COLOR = 'black';
 //such as board size and player colors. It initializes the game state, sets up the board's visual 
 //representation, and prepares for the game to start.
 function createBoard() {
+
+    //Show player names
+    document.getElementById('p1').hidden = false;
+    document.getElementById('p2').hidden = false;
+    document.getElementById('player1Move').hidden = false;
+
     // Retrieve and validate the board size
     boardSize = parseInt(document.getElementById('boardSize').value);
     if (isNaN(boardSize) || boardSize % 2 !== 0 || boardSize < 8 || boardSize > 10) {
@@ -94,6 +98,9 @@ function shouldPlacePiece(row, col, boardSize) {
 
 //Handles the logic when a square on the board is clicked. It allows players to select, move, and make moves with their pieces.
 function handleSquareClick(row, col) {
+    // Hide game status message
+    document.getElementById('player1Move').hidden = true;
+
     // Check if the game is over
     if (isGameOver) {
         console.log("Game is over. No more moves allowed.");
@@ -467,7 +474,7 @@ function calculatePossibleMoves(row, col) {
     checkMoveDirection(possibleMoves, blockedMoves, row, col, -1, -1); // up-left
 
     highlightMoves(possibleMoves, 'green');
-    highlightMoves(blockedMoves, 'red');
+    //highlightMoves(blockedMoves, 'red');
 }
 
 
@@ -874,6 +881,7 @@ document.getElementById('opponentType').addEventListener('change', function() {
 
 
 function resetGame() {
+    document.getElementById('player1Move').hidden = false;
     // Reset the game state variables
     selectedPiece = null;
     elapsedTime = 0;

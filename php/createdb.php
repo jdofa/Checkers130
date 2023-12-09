@@ -103,7 +103,7 @@ if ($conn->query($sql) === FALSE) {
 
 //Populate Local Leaderboard Table
 // dolfo Game 1
-$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('dolfo', 'password1', 'Rodolfo', 1, 1, '00:07:14')";
+$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('dolfo', 'password1', 'dolfo', 1, 1, '00:07:14')";
 if ($conn->query($sql) === FALSE) {
     echo "Error Inserting Record: " . $conn->error;
     $error = TRUE;
@@ -114,7 +114,7 @@ if ($conn->query($sql) === FALSE) {
     $error = TRUE;
 }
 // dolfo Game 2
-$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('dolfo', 'password1', 'Rodolfo', 1, 1, '00:05:11')";
+$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('dolfo', 'password1', 'dolfo', 1, 1, '00:05:11')";
 if ($conn->query($sql) === FALSE) {
     echo "Error Inserting Record: " . $conn->error;
     $error = TRUE;
@@ -125,7 +125,7 @@ if ($conn->query($sql) === FALSE) {
     $error = TRUE;
 }
 // dolfo Game 3
-$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('dolfo', 'password1', 'Rodolfo', 1, 1, '00:10:41')";
+$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('dolfo', 'password1', 'dolfo', 1, 1, '00:10:41')";
 if ($conn->query($sql) === FALSE) {
     echo "Error Inserting Record: " . $conn->error;
     $error = TRUE;
@@ -137,7 +137,7 @@ if ($conn->query($sql) === FALSE) {
 }
 
 // Stanley Game 1
-$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('stanley', 'password2', 'stan', 1, 0, '00:15:03')";
+$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('stanley', 'password2', 'stanley', 1, 0, '00:15:03')";
 if ($conn->query($sql) === FALSE) {
     echo "Error Inserting Record: " . $conn->error;
     $error = TRUE;
@@ -148,7 +148,7 @@ if ($conn->query($sql) === FALSE) {
     $error = TRUE;
 }
 // Stanley Game 2
-$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('stanley', 'password2', 'stan', 1, 0, '00:17:56')";
+$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('stanley', 'password2', 'stanley', 1, 0, '00:17:56')";
 if ($conn->query($sql) === FALSE) {
     echo "Error Inserting Record: " . $conn->error;
     $error = TRUE;
@@ -160,7 +160,7 @@ if ($conn->query($sql) === FALSE) {
 }
 
 // Daniel Game 1
-$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('daniel', 'password3', 'dantheman', 1, 0, '00:30:13')";
+$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('daniel', 'password3', 'daniel', 1, 0, '00:30:13')";
 if ($conn->query($sql) === FALSE) {
     echo "Error Inserting Record: " . $conn->error;
     $error = TRUE;
@@ -171,7 +171,7 @@ if ($conn->query($sql) === FALSE) {
     $error = TRUE;
 }
 // Daniel Game 2
-$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('daniel', 'password3', 'dantheman', 1, 1, '00:00:30')";
+$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('daniel', 'password3', 'daniel', 1, 1, '00:00:30')";
 if ($conn->query($sql) === FALSE) {
     echo "Error Inserting Record: " . $conn->error;
     $error = TRUE;
@@ -182,7 +182,7 @@ if ($conn->query($sql) === FALSE) {
     $error = TRUE;
 }
 // Daniel Game 3
-$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('daniel', 'password3', 'dantheman', 1, 0, '00:7:21')";
+$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('daniel', 'password3', 'daniel', 1, 0, '00:7:21')";
 if ($conn->query($sql) === FALSE) {
     echo "Error Inserting Record: " . $conn->error;
     $error = TRUE;
@@ -193,7 +193,7 @@ if ($conn->query($sql) === FALSE) {
     $error = TRUE;
 }
 // Daniel Game 4
-$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('daniel', 'password3', 'dantheman', 1, 1, '00:9:22')";
+$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('daniel', 'password3', 'daniel', 1, 1, '00:9:22')";
 if ($conn->query($sql) === FALSE) {
     echo "Error Inserting Record: " . $conn->error;
     $error = TRUE;
@@ -204,7 +204,7 @@ if ($conn->query($sql) === FALSE) {
     $error = TRUE;
 }
 //Osvaldo Game 1
-$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('osvaldo', 'password4', 'squirepickleson', 1, 1, '00:9:01')";
+$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('osvaldo', 'password4', 'osvaldo', 1, 1, '00:9:01')";
 if ($conn->query($sql) === FALSE) {
     echo "Error Inserting Record: " . $conn->error;
     $error = TRUE;
