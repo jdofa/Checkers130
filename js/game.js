@@ -12,25 +12,6 @@ const PLAYER_COLOR = 'red';
 const BOT_COLOR = 'black';
 
 
-let gameMode = 'human'; // Default to 'human' mode. You should set this based on user input or session data.
-
-document.getElementById('createGameButton').addEventListener('click', createBoard);
-document.getElementById('opponentType').addEventListener('change', function() {
-    gameMode = this.value; // Correctly set the game mode
-    let opponentType = this.value;
-    gameMode = opponentType; // Set game mode to either 'bot' or 'human'
-
-    // Reset the game state to initial conditions
-    resetGame();
-
-    // Set the currentPlayer based on the selected opponent type
-    currentPlayer = (opponentType === 'bot') ? 'bot' : 'red';
-
-    // Reinitialize the board with the new settings
-    createBoard();
-});
-
-
 //This function is responsible for creating the game board based on user inputs, 
 //such as board size and player colors. It initializes the game state, sets up the board's visual 
 //representation, and prepares for the game to start.
@@ -42,12 +23,12 @@ function createBoard() {
         return;
     }
 
-    // Retrieve player colors
+    // Retrieve player colors and opponent type
     const player1Color = document.getElementById('player1Color').value;
     const player2Color = document.getElementById('player2Color').value;
+    const opponentType = document.getElementById('opponentType').value;
 
-    // Set the initial player to 'red'
-    currentPlayer = 'red';
+    currentPlayer = opponentType === 'bot' ? 'bot' : 'red';
 
     const checkerboard = document.getElementById('checkerboard');
     checkerboard.innerHTML = '';
@@ -63,6 +44,7 @@ function createBoard() {
             square.classList.add('square');
             square.classList.add((row + col) % 2 === 0 ? 'light' : 'dark');
 
+            // Updated piece placement logic
             const pieceColor = shouldPlacePiece(row, col, boardSize) ? 
                                (row < boardSize / 2 - 1 ? player1Color : 
                                (row > boardSize / 2 ? player2Color : null)) : null;
@@ -90,9 +72,11 @@ function createBoard() {
     // Initialize game status without declaring a winner
     updateGameStatus(false); // The 'false' parameter prevents winner checking
 
-    // If bot should start first, you might want to add logic here to handle that
+    // Delay the bot's first move if the bot starts
+    if (currentPlayer === 'bot') {
+        setTimeout(makeBotMove, 1000); // Delay for better UX
+    }
 }
-
 
 
 //A utility function that checks if a piece on the board at a given position is a king piece.
@@ -110,82 +94,49 @@ function shouldPlacePiece(row, col, boardSize) {
 
 //Handles the logic when a square on the board is clicked. It allows players to select, move, and make moves with their pieces.
 function handleSquareClick(row, col) {
+    // Check if the game is over
     if (isGameOver) {
         console.log("Game is over. No more moves allowed.");
-        return;
+        return; // Exit the function if the game is over
     }
 
     console.log(`Square clicked: row ${row}, col ${col}, current player: ${currentPlayer}`);
-    const clickedPiece = board[row][col];
+    const pieceColor = board[row][col];
 
-    if (selectedPiece === null && clickedPiece === currentPlayer) {
-        selectPiece(row, col);
-    } else if (selectedPiece) {
-        attemptMovePiece(row, col);
-    }
-}
-
-// Selects a piece on the board.
-function selectPiece(row, col) {
-    console.log("Piece selected");
-    selectedPiece = { row, col };
-    const clickedSquare = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
-    clickedSquare.classList.add('selected-square');
-    calculatePossibleMoves(row, col);
-}
-
-// Attempts to move a selected piece.
-function attemptMovePiece(row, col) {
-    if (isValidMove(selectedPiece.row, selectedPiece.col, row, col)) {
-        console.log("Moving piece");
-        movePiece(selectedPiece.row, selectedPiece.col, row, col);
-        clearSelectionAndHighlightedMoves();
-        updateGameStatus();
-    } else {
-        console.log("Invalid move");
-        clearSelectionAndHighlightedMoves();
-    }
-}
-
-// Clears the selected piece and highlighted moves.
-function clearSelectionAndHighlightedMoves() {
+    // Clear previous selections and highlighted moves
     clearSelection();
     clearHighlightedMoves();
-    selectedPiece = null;
-}
 
-// Moves a game piece from one position to another on the board.
-function movePiece(fromRow, fromCol, toRow, toCol) {
-    console.log(`Moving piece from (${fromRow}, ${fromCol}) to (${toRow}, ${toCol})`);
-    let movedPiece = board[fromRow][fromCol];
-    board[toRow][toCol] = movedPiece;
-    board[fromRow][fromCol] = null;
-    handleCaptureAndKinging(fromRow, toRow, fromCol, toCol, movedPiece);
-    updatePieceOnBoard(fromRow, fromCol, toRow, toCol);
-    togglePlayerAndUpdateState();
-}
+    if (selectedPiece === null && pieceColor === currentPlayer) {
+        console.log("Piece selected");
+        selectedPiece = { row, col };
 
-// Handles capture and kinging after moving a piece.
-function handleCaptureAndKinging(fromRow, toRow, fromCol, toCol, movedPiece) {
-    if (Math.abs(fromRow - toRow) === 2) {
-        performCapture(fromRow, toRow, fromCol, toCol);
+        // Add selection class to the clicked square
+        const clickedSquare = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+        if (clickedSquare) {
+            clickedSquare.classList.add('selected-square');
+        }
+
+        // Calculate and highlight possible moves
+        calculatePossibleMoves(row, col);
+    } else if (selectedPiece) {
+        if (selectedPiece.row === row && selectedPiece.col === col) {
+            console.log("Piece deselected");
+            selectedPiece = null;
+        } else if (isValidMove(selectedPiece.row, selectedPiece.col, row, col)) {
+            console.log("Moving piece");
+            movePiece(selectedPiece.row, selectedPiece.col, row, col);
+            selectedPiece = null; // Clear selected piece after move
+            clearHighlightedMoves(); // Clear highlighted moves after a move
+            // After moving, check for a winner
+            updateGameStatus(); // This will check for a winner and update the game status
+        } else {
+            console.log("Invalid move");
+            selectedPiece = null; // Clear selected piece if move is invalid
+        }
     }
-    if (shouldKingPiece(toRow, movedPiece)) {
-        kingPiece(toRow, toCol);
-    }
 }
 
-// Checks if a piece should be kinged.
-function shouldKingPiece(row, piece) {
-    return !piece.king && ((piece.color === 'red' && row === boardSize - 1) || (piece.color === 'black' && row === 0));
-}
-
-// Toggles the current player and updates game state.
-function togglePlayerAndUpdateState() {
-    togglePlayer();
-    updatePieceCount();
-    clearHighlightedMoves();
-}
 
 //Clears the selected square on the board.
 function clearSelection() {
@@ -266,56 +217,55 @@ function isCaptureMove(fromRow, fromCol, toRow, toCol) {
 }
 
 
-
 //Checks if a move from one position to another is valid.
 function isValidMove(fromRow, fromCol, toRow, toCol) {
     console.log(`Checking valid move from (${fromRow}, ${fromCol}) to (${toRow}, ${toCol})`);
 
+    // Check if the move is within the board boundaries
     if (!isInsideBoard(toRow, toCol)) {
         console.log("Move is outside board boundaries.");
         return false;
     }
 
+    // Get the moving piece's information
     const movingPiece = board[fromRow][fromCol];
     const isKing = movingPiece && movingPiece.king;
+
+    // Calculate the differences in rows and columns to determine the type of move
     const rowDiff = toRow - fromRow;
     const colDiff = Math.abs(toCol - fromCol);
 
-    // Mandatory capture rule
-    if (isCaptureAvailable(currentPlayer) && !isCaptureMove(fromRow, fromCol, toRow, toCol)) {
-        console.log("Capture is mandatory.");
-        return false;
-    }
-
-    // Regular move validation
+    // Check if it's a regular move (one square diagonally)
     const isRegularMove = Math.abs(rowDiff) === 1 && colDiff === 1;
+
     if (isRegularMove) {
+        // Check if the destination square is empty
         if (board[toRow][toCol] !== null) {
             console.log("Destination square is not empty.");
             return false;
         }
 
-        // Correcting the direction check for non-king pieces
-        if (!isKing) {
-            if ((currentPlayer === 'red' && rowDiff !== 1) || (currentPlayer === 'black' && rowDiff !== -1)) {
-                console.log("Non-king pieces can only move forward.");
-                return false;
-            }
+        // Check the direction of the move for non-king pieces
+        if (!isKing && ((currentPlayer === 'red' && rowDiff !== 1) || (currentPlayer === 'black' && rowDiff !== -1))) {
+            console.log("Invalid direction for regular move.");
+            return false;
         }
 
         console.log("Valid regular move.");
         return true;
     }
 
-    // Capture move validation
-    const isCaptureMove = rowDiff === 2 || rowDiff === -2;
+    // Check if it's a capture move (two squares diagonally)
+    const isCaptureMove = Math.abs(rowDiff) === 2 && colDiff === 2;
+
     if (isCaptureMove) {
+        // Calculate middle square for capture move
         const midRow = (fromRow + toRow) / 2;
         const midCol = (fromCol + toCol) / 2;
-        const opponentPiece = board[midRow][midCol];
-        const isValidCapture = opponentPiece !== null && opponentPiece !== currentPlayer;
 
-        if (board[toRow][toCol] === null && isValidCapture) {
+        // Check if the middle square has an opponent's piece and destination square is empty
+        const isOpponentPiece = board[midRow][midCol] !== null && board[midRow][midCol] !== currentPlayer;
+        if (board[toRow][toCol] === null && isOpponentPiece) {
             console.log("Valid capture move.");
             return true;
         } else {
@@ -324,11 +274,10 @@ function isValidMove(fromRow, fromCol, toRow, toCol) {
         }
     }
 
+    // If neither a valid regular move nor a valid capture move, then it's not valid
     console.log("Move is not valid.");
     return false;
 }
-
-
 
 
 //Determines if a given row and column are within the boundaries of the board.
@@ -358,58 +307,51 @@ function resetTimer() {
 
 //Moves a game piece from one position to another on the board.
 function movePiece(fromRow, fromCol, toRow, toCol) {
-    console.log(`Attempting to move piece from (${fromRow}, ${fromCol}) to (${toRow}, ${toCol})`);
+    console.log(`Moving piece from (${fromRow}, ${fromCol}) to (${toRow}, ${toCol})`);
+    let movedPiece = board[fromRow][fromCol];
 
-    if (!isValidMove(fromRow, fromCol, toRow, toCol)) {
-        console.error('Invalid move attempted');
+    if (!movedPiece) {
+        console.error('Error: No piece found at starting square');
         return;
     }
-
-    let movedPiece = board[fromRow][fromCol];
 
     // Update the board array to reflect the piece's new position
     board[toRow][toCol] = movedPiece;
     board[fromRow][fromCol] = null;
 
-    clearSelection(); // Clear any selected piece
+    // Clear the selection
+    const previouslySelected = document.querySelector('.selected-square');
+    if (previouslySelected) {
+        previouslySelected.classList.remove('selected-square');
+    }
 
     // Handle capture
-    let isCapture = Math.abs(fromRow - toRow) === 2;
-    if (isCapture) {
-        handleCapture(fromRow, toRow, fromCol, toCol);
+    if (Math.abs(fromRow - toRow) === 2) {
+        const midRow = (fromRow + toRow) / 2;
+        const midCol = (fromCol + toCol) / 2;
+        if (board[midRow][midCol]) {
+            board[midRow][midCol] = null; // Remove the captured piece from the board array
+            removePieceFromBoard(midRow, midCol); // Remove the captured piece visually
+        }
     }
 
-    updatePieceOnBoard(fromRow, fromCol, toRow, toCol); // Update visual representation
+    updatePieceOnBoard(fromRow, fromCol, toRow, toCol); // Update the visual representation of the board
 
-    // Check and handle kinging
-    if (checkForKinging(toRow, movedPiece)) {
-        kingPiece(toRow, toCol); // King the piece if conditions are met
+    // Check for kinging
+    if (!movedPiece.king && ((movedPiece.color === 'red' && toRow === boardSize - 1) || (movedPiece.color === 'black' && toRow === 0))) {
+        movedPiece.king = true;
+        kingPiece(toRow, toCol); // King the piece if it reaches the opposite end of the board
     }
 
-    // Check for additional captures in case of multiple jumps
-    if (isCapture && canCaptureFrom(toRow, toCol)) {
-        console.log('Additional capture available, waiting for next move.');
-        selectedPiece = { row: toRow, col: toCol }; // Select the piece for the next capture
-    } else {
-        togglePlayer(); // Switch to the other player if no more captures
-    }
+    // Switch to the other player after the move
+    togglePlayer(); 
 
-    updatePieceCount(); // Update the piece count after the move
-    clearHighlightedMoves(); // Clear any highlighted moves
+    // Update the piece count after the move
+    updatePieceCount(); 
+
+    // Clear highlighted moves after a move
+    clearHighlightedMoves(); 
 }
-
-function handleCapture(fromRow, toRow, fromCol, toCol) {
-    const midRow = (fromRow + toRow) / 2;
-    const midCol = (fromCol + toCol) / 2;
-    console.log(`Capturing piece at (${midRow}, ${midCol})`);
-    board[midRow][midCol] = null; // Remove the captured piece from the board
-    removePieceFromBoard(midRow, midCol); // Remove the piece visually
-}
-
-function checkForKinging(row, piece) {
-    return !piece.king && ((piece.color === 'red' && row === boardSize - 1) || (piece.color === 'black' && row === 0));
-}
-
 
 
 //Removes a piece visually from the board at the specified position.
@@ -471,92 +413,40 @@ function updateHoverEffect() {
 //Updates the game status, checking for a winner or the current player's turn.
 function updateGameStatus() {
     const winner = checkForWinner();
-    console.log("[Game Status] Checking for winner:", winner);
     const statusDiv = document.getElementById('gameStatus');
+    const player1Color = statusDiv.getAttribute('data-player1-color');
+    const player2Color = statusDiv.getAttribute('data-player2-color');
+    let currentPlayerText = currentPlayer === player1Color ? 'Player 1' : 'Player 2';
+
+    console.log("[Game Status] Checking for winner:", winner);
 
     if (winner) {
         console.log(`[Game Status] Winner found: ${winner}`);
-        statusDiv.innerHTML = `${winner.charAt(0).toUpperCase() + winner.slice(1)} wins the game!`;
-        if(winner === 'red'){
-            //player 1 wins
-            finaltime = timeToString(elapsedTime);
-            form = document.createElement("form");
-            form.action = "php/player1wins.php";
-            form.method = "POST";
-            form.innerHTML = "<input name='time' value='" + finaltime + "'>";
-            document.body.append(form);
-            form.submit();
-        } 
-        else{
-            //player 2 wins
-            finaltime = timeToString(elapsedTime);
-            form = document.createElement("form");
-            form.action = "php/player2wins.php";
-            form.method = "POST";
-            form.innerHTML = "<input name='time' value='" + finaltime + "'>";
-            document.body.append(form);
-            form.submit();
-        } 
+        statusDiv.innerHTML = `${winner} wins the game!`;
         isGameOver = true;
     } else {
         console.log("[Game Status] Game ongoing. Current player:", currentPlayer);
-        statusDiv.innerHTML = `Current Player: ${currentPlayer.charAt(0).toUpperCase() + currentPlayer.slice(1)}`;
+        statusDiv.innerHTML = `Current Player: ${currentPlayerText}`;
     }
 }
+
+
 
 
 //Calculates and highlights possible moves for a selected piece.
 function calculatePossibleMoves(row, col) {
     const possibleMoves = [];
-    const captureMoves = [];
+    const blockedMoves = [];
 
-    const piece = board[row][col];
-    const isKing = piece && piece.king;
+    // Check all four diagonal directions
+    checkMoveDirection(possibleMoves, blockedMoves, row, col, 1, 1);  // down-right
+    checkMoveDirection(possibleMoves, blockedMoves, row, col, 1, -1); // down-left
+    checkMoveDirection(possibleMoves, blockedMoves, row, col, -1, 1); // up-right
+    checkMoveDirection(possibleMoves, blockedMoves, row, col, -1, -1); // up-left
 
-    if (canCaptureFrom(row, col)) {
-        // Check for capture moves in all directions
-        checkCaptureDirections(captureMoves, row, col, isKing);
-    } else {
-        // Check for regular moves only if no capture is available
-        checkRegularDirections(possibleMoves, row, col, isKing);
-    }
-
-    // Highlight possible regular and capture moves
     highlightMoves(possibleMoves, 'green');
-    highlightMoves(captureMoves, 'blue'); // Different color for capture moves
+    highlightMoves(blockedMoves, 'red');
 }
-
-function checkRegularDirections(possibleMoves, row, col, isKing) {
-    const directions = getPlayerDirections(board[row][col], row, col, isKing);
-    directions.forEach(dir => {
-        const newRow = row + dir.dr;
-        const newCol = col + dir.dc;
-        if (isInsideBoard(newRow, newCol) && board[newRow][newCol] === null) {
-            possibleMoves.push({ row: newRow, col: newCol });
-        }
-    });
-}
-
-function checkCaptureDirections(captureMoves, row, col, isKing) {
-    const directions = getPlayerDirections(board[row][col], row, col, isKing);
-    directions.forEach(dir => {
-        const newRow = row + 2 * dir.dr;
-        const newCol = col + 2 * dir.dc;
-        if (canCaptureTo(row, col, newRow, newCol)) {
-            captureMoves.push({ fromRow: row, fromCol: col, toRow: newRow, toCol: newCol });
-        }
-    });
-}
-
-function canCaptureTo(fromRow, fromCol, toRow, toCol) {
-    const midRow = (fromRow + toRow) / 2;
-    const midCol = (fromCol + toCol) / 2;
-    return isInsideBoard(toRow, toCol) &&
-           board[toRow][toCol] === null &&
-           board[midRow][midCol] !== null &&
-           board[midRow][midCol] !== currentPlayer;
-}
-
 
 
 //Checks and adds possible moves in a specific direction based on the current player's piece.
@@ -623,20 +513,19 @@ function timeToString(time) {
 
 //Updates the count of pieces for each player on the board.
 function updatePieceCount() {
-    let player1Pieces = 0;
-    let player2Pieces = 0;
+    let redPieces = 0;
+    let blackPieces = 0;
 
     for (let row = 0; row < boardSize; row++) {
         for (let col = 0; col < boardSize; col++) {
-            if (board[row][col] === 'red') player1Pieces++; // Assuming 'red' represents player 1
-            if (board[row][col] === 'black') player2Pieces++; // Assuming 'black' represents player 2
+            if (board[row][col] === 'red') redPieces++;
+            if (board[row][col] === 'black') blackPieces++;
         }
     }
 
-    document.getElementById("player1PiecesCount").innerText = player1Pieces;
-    document.getElementById("player2PiecesCount").innerText = player2Pieces;
+    document.getElementById("redPiecesCount").innerText = redPieces;
+    document.getElementById("blackPiecesCount").innerText = blackPieces;
 }
-
 
 
 //Checks if there is a winner in the game based on the number of remaining pieces and their ability to move.
@@ -667,11 +556,11 @@ function checkForWinner() {
     // Check for win conditions
     if (blackPieces === 0 || !blackCanMove) {
         isGameOver = true; // Set the game over flag
-        alert('Player 1 wins!');
+        alert('Red wins!');
         return 'red';
     } else if (redPieces === 0 || !redCanMove) {
         isGameOver = true; // Set the game over flag
-        alert('Player 2 wins!');
+        alert('Black wins!');
         return 'black';
     }
 
@@ -942,6 +831,7 @@ function findCaptureMoves(row, col, player) {
     return captureMoves;
 }
 
+let gameMode = 'human'; // Default to 'human' mode
 
 
 document.getElementById('opponentType').addEventListener('change', function() {
