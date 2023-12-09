@@ -1,0 +1,215 @@
+/* Global elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body {
+    min-height: 100%;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    background-color: #ced1d4;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Ensures footer stays at the bottom */
+}
+header {
+    width: 100%;
+    text-align: center;
+    padding-top: 20px;
+}
+nav {
+    width: 15%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: auto; /* Centering the nav */
+}
+a {
+    text-decoration: none;
+    color: #b1102b;
+    font-size: 2vw;
+    border: 3px solid #13284c;
+    background-color: #13284c;
+    border-radius: 4px;
+    padding: 5px;
+    margin-top: 5px;
+}
+a:hover {
+    color: #13284c;
+    background-color: #b1102b;
+    border: 3px solid #13284c;
+    border-radius: 4px;
+}
+h1 {
+    font-size: 2vw;
+    margin: 0 auto; /* Centering horizontally */
+    text-align: center; /* Centering text within the element */
+}
+
+/* Classes */
+.site-logo {
+    width: 15%;
+    height: 15%;
+}
+
+/* Game specific styles */
+#checkerboard {
+    display: grid;
+    margin: 0 auto; /* Centering the checkerboard */
+    border: 2px solid grey; /* Updated to grey border */
+}
+
+.square {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #333; /* Border to distinguish squares */
+    display: flex;     /* Flexbox for centering content */
+    justify-content: center; /* Center content horizontally */
+    align-items: center;     /* Center content vertically */
+}
+
+.dark {
+    background-color: #b58863;
+}
+
+.light {
+    background-color: #f0d9b5;
+}
+
+.piece {
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    margin: auto;
+    position: relative;
+    top: 10%;
+}
+
+.red-piece {
+    background-color: red;
+}
+
+.black-piece {
+    background-color: black;
+}
+
+.king {
+    border: 2px solid gold; /* Add a golden border for king pieces */
+    box-shadow: 0 0 10px gold; /* Optional: Add a glow effect */
+}
+
+
+
+/* Hover effect styles for squares based on current player */
+.player-red-hover .square:hover {
+    border: 2px solid red; /* Red border for red player's turn */
+}
+
+.player-black-hover .square:hover {
+    border: 2px solid black; /* Black border for black player's turn */
+}
+
+/* Buttons */
+button {
+    background-color: #13284c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 10px auto; /* Centering the buttons */
+    display: block; /* Make buttons block level for auto margins to work */
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #b1102b;
+}
+
+#gameOptions, #gameStatus {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+footer {
+    background-color: #13284c;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+footer p {
+    margin: 10px 0;
+}
+
+.selected-square {
+    border: 3px solid yellow; /* Highlighting border */
+}
+
+/* Styles for highlighting possible and blocked moves */
+.square.possible-move {
+    background-color: rgba(0, 255, 0, 0.3); /* Semi-transparent green */
+}
+
+.square.blocked-move {
+    background-color: rgba(255, 0, 0, 0.3); /* Semi-transparent red */
+}
+
+#gameInfo {
+    margin: 10px auto; /* Center the box horizontally */
+    padding: 5px; /* Reduced padding */
+    background-color: #f2f2f2; /* Light grey background */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    text-align: center; /* Center the text inside each element */
+    color: #333; /* Dark grey text for readability */
+    font-family: Arial, sans-serif; /* A standard font */
+    width: 200px; /* Set a fixed width for a square shape */
+}
+
+#gameInfo p {
+    margin: 5px 0; /* Reduced margin */
+    font-size: 16px; /* A readable font size */
+}
+
+#gameInfo span {
+    font-weight: bold; /* Make the dynamic parts (like the time and counts) stand out */
+}
+
+#gameStatus {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.game-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.game-info p {
+    margin: 0;
+    font-size: 16px;
+}
+
+.game-info span {
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+
+.button-container {
+    text-align: center; /* Center its children horizontally */
+}
+
+button {
+    display: inline-block; /* Display buttons inline */
+    margin-right: 10px; /* Add some spacing between buttons */
+}
+
+
+
