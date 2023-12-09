@@ -898,3 +898,28 @@ function resetGame() {
     // Recreate the board with the current settings
     createBoard();
 }
+
+
+// Button that ends game, to test the game over state
+
+function endGame(){
+    //player 1 wins
+    finaltime = timeToString(elapsedTime);
+    form = document.createElement("form");
+    form.action = "php/player1wins.php";
+    form.method = "POST";
+    form.innerHTML = "<input name='time' value='" + finaltime + "'>";
+    document.body.append(form);
+    form.submit();
+}
+
+function endGame2(){
+    //player 2 wins
+    finaltime = timeToString(elapsedTime);
+    form = document.createElement("form");
+    form.action = "php/player2wins.php";
+    form.method = "POST";
+    form.innerHTML = "<input name='time' value='" + finaltime + "'>";
+    document.body.append(form);
+    form.submit();
+}

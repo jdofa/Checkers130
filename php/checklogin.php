@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-$servername = "localhost";
-$username = "root";
-$password = "";
+$servername = $_SESSION['servername'];
+$username = $_SESSION['dbusername'];
+$password = $_SESSION['dbpassword'];
 $dbname = "checkers";
 $error = FALSE;
 
@@ -15,15 +15,15 @@ if ($conn->connect_error) {
 }
 
 // Get username and password from login form
-$username = $_POST['username'];
-$password = $_POST['password'];
+$currUser = $_POST['username'];
+$currPswd = $_POST['password'];
 
 // Check if username and password match
-$sql = "SELECT * FROM Users WHERE Username = '$username' AND Password = '$password'";
+$sql = "SELECT * FROM Users WHERE Username = '$currUser' AND Password = '$currPswd'";
 $result = $conn -> query($sql);
 if ($result -> num_rows == 0) { //No match found
     //First check if username exists
-    $sql = "SELECT * FROM Users WHERE Username = '$username'";
+    $sql = "SELECT * FROM Users WHERE Username = '$currUser'";
     $result = $conn -> query($sql);
     if ($result -> num_rows == 0) { //Username does not exist
         $_SESSION['wronguser'] = true;
@@ -38,7 +38,8 @@ if ($result -> num_rows == 0) { //No match found
 }
 else {
     $_SESSION['loggedin'] = true;
-    $_SESSION['username'] = $username;
+    $_SESSION['username'] = $currUser;
+    $_SESSION['password'] = $currPswd;
     unset($_SESSION['wronguser']);
     unset($_SESSION['wrongpswd']);
     header("Location: ../index.php");

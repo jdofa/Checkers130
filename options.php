@@ -47,8 +47,8 @@ if (!isset($_SESSION['loggedin'])){
                 </select>
             </div>
             <div class="form-section">
-                <label for="player1Name">Player 1 Name:</label>
-                <input type="text" id="player1Name" name="player1Name" placeholder="Enter Player 1 Name" required>
+                <label for="player1Name">Player 1:</label>
+                <input readonly type="text" id="player1Name" name="player1Name" value=" <?php $user = $_SESSION["username"]; echo "$user"; ?> ">
             </div>
             <div class="form-section">
                 <label for="player1Color">Player 1 Color:</label>

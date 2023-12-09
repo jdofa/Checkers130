@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-
 // Game Options From Form
 $_SESSION['boardSize'] = $_POST['boardSize'];
 $_SESSION['boardTheme'] = $_POST['boardTheme'];

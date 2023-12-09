@@ -1,7 +1,8 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
+session_start();
+$servername = $_SESSION['servername'];
+$username = $_SESSION['dbusername'];
+$password = $_SESSION['dbpassword'];
 $dbname = "checkers";
 $error = FALSE;
 

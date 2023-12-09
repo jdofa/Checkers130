@@ -36,7 +36,9 @@ $gameMode = $_SESSION['gameMode'];
     <header>
     <h1>Checkers Game</h1>
     <nav>
-        <a href="index.php">Quit</a>    
+        <a href="index.php">Quit</a>
+        <button onclick="endGame()">End Game - Player 1 Wins</button>
+        <button onclick="endGame2()">End Game - Player 2 Wins</button>      
     </nav>
     </header>
     <div id="gameOptions">

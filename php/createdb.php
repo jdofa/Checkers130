@@ -1,10 +1,14 @@
 <?php
 session_start();
-$_SESSION['databaseCreated'] = true;
+//Change only these values in the session variables to match your local server
+$_SESSION['servername'] = "localhost";
+$_SESSION['dbusername'] = "root";
+$_SESSION['dbpassword'] = "";
 
-$servername = "localhost";
-$username = "root";
-$password = "";
+$servername = $_SESSION['servername'];
+$username = $_SESSION['dbusername'];
+$password = $_SESSION['dbpassword'];
+
 $error = FALSE;
 
 // Create connection to server
@@ -23,6 +27,7 @@ if ($conn->query($sql) === FALSE) {
     $error = TRUE;
 } 
 $conn->close();
+$_SESSION['databaseCreated'] = true;
 
 // Connect to Database
 $dbname = "checkers";

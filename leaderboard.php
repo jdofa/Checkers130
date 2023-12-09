@@ -1,8 +1,8 @@
 <?php 
 session_start();
-$servername = "localhost";
-$username = "root";
-$password = "";
+$servername = $_SESSION['servername'];
+$username = $_SESSION['dbusername'];
+$password = $_SESSION['dbpassword'];
 $dbname = "checkers";
 
 // Connect to Database
@@ -16,8 +16,6 @@ $sql = "SELECT COUNT(*) FROM GlobalBoard";
 $result = $conn -> query($sql);
 $total = mysqli_fetch_array($result);
 $records = $total[0]; //records is the number of rows in the table
-
-
 
 ?>
 <!DOCTYPE html>
