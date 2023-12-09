@@ -61,16 +61,15 @@ $gameMode = $_SESSION['gameMode'];
         <button id="resetButton" onclick="resetGame()">Reset Game</button>
     </div>
     <div class="game-info" id="gameInfo">
-    <p>Time Elapsed: <span id="timeElapsed">0:00</span></p>
-    <p style="color: <?php echo htmlspecialchars($player1Color); ?>;"> 
-        <?php echo htmlspecialchars($player1Name); ?> Pieces: <span id="player1PiecesCount">12</span>
-    </p>
-    <p style="color: <?php echo htmlspecialchars($player2Color); ?>;"> 
-        <?php echo htmlspecialchars($player2Name); ?> Pieces: <span id="player2PiecesCount">12</span>
-    </p>
-</div>
-
-    <div id="gameStatus">Starting the game...</div>
+        <p>Time Elapsed: <span id="timeElapsed">0:00</span></p>
+        <p style="color: <?php echo $player1Color; ?>;">Player 1 Pieces: <span id="player1PiecesCount">12</span></p>
+        <p style="color: <?php echo $player2Color; ?>;">Player 2 Pieces: <span id="player2PiecesCount">12</span></p>
+    </div>
+    <div id="gameStatus" 
+         data-player1-color="<?php echo htmlspecialchars($player1Color); ?>" 
+         data-player2-color="<?php echo htmlspecialchars($player2Color); ?>">
+        Starting the game...
+    </div>
     <?php
     echo "<p class='gameName' style='color: $player1Color;'> Player 1: $player1Name </p>";
     ?>
