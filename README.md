@@ -19,3 +19,17 @@ Thank you for respecting our work and for upholding the principles of academic i
 
 jdofa - dolfo@mail.fresnostate.edu <br>
 Youssif Alakwaa - yalakwaa1@mail.fresnostate.edu <br>
+------------------------------------------------------------
+How To Run:
+1. Need to have a web server running on your machine. (XAMPP)
+- Run Apache and MySQL
+2. Clone the repository into the htdocs folder of your web server.
+3. Open the browser and type in the URL: localhost/YOUR-FILE-NAME
+4. Click on the create database button.
+5. Can use created users, or you can sign up an account.
+
+------------------------------------------------------------
+Work Distribution Can Be Found Here:
+https://github.com/jdofa/Checkers130
+
+
