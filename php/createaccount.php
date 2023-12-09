@@ -50,6 +50,7 @@ if ($result -> num_rows == 0) {
         //set needed session variables
         $_SESSION['loggedin'] = true;
         $_SESSION['username'] = $username;
+        $_SESSION['password'] = $password;
         if($error == FALSE){
             header("Location: ../index.php");
         }

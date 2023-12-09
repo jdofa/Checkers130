@@ -10,12 +10,7 @@ html, body {
     background-color: #ced1d4;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Ensures footer stays at the bottom */
-}
-header {
-    width: 100%;
-    text-align: center;
-    padding-top: 20px;
+    justify-content: space-between; 
 }
 nav {
     width: 15%;
@@ -45,11 +40,17 @@ h1 {
     margin: 0 auto; /* Centering horizontally */
     text-align: center; /* Centering text within the element */
 }
+header{
+    margin: 30px 0%;
+}
 
 /* Classes */
-.site-logo {
-    width: 15%;
-    height: 15%;
+.gameName{
+    font-size: 2vw;
+    width: 100%;
+    margin:auto;
+    text-align: center;
+    color: #13284c;
 }
 
 /* Game specific styles */
@@ -84,15 +85,6 @@ h1 {
     position: relative;
     top: 10%;
 }
-
-.red-piece {
-    background-color: red;
-}
-
-.black-piece {
-    background-color: black;
-}
-
 .king {
     border: 2px solid gold; /* Add a golden border for king pieces */
     box-shadow: 0 0 10px gold; /* Optional: Add a glow effect */

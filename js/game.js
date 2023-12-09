@@ -419,6 +419,26 @@ function updateGameStatus() {
     if (winner) {
         console.log(`[Game Status] Winner found: ${winner}`);
         statusDiv.innerHTML = `${winner.charAt(0).toUpperCase() + winner.slice(1)} wins the game!`;
+        if(winner === 'red'){
+            //player 1 wins
+            finaltime = timeToString(elapsedTime);
+            form = document.createElement("form");
+            form.action = "php/player1wins.php";
+            form.method = "POST";
+            form.innerHTML = "<input name='time' value='" + finaltime + "'>";
+            document.body.append(form);
+            form.submit();
+        } 
+        else{
+            //player 2 wins
+            finaltime = timeToString(elapsedTime);
+            form = document.createElement("form");
+            form.action = "php/player2wins.php";
+            form.method = "POST";
+            form.innerHTML = "<input name='time' value='" + finaltime + "'>";
+            document.body.append(form);
+            form.submit();
+        } 
         isGameOver = true;
     } else {
         console.log("[Game Status] Game ongoing. Current player:", currentPlayer);
@@ -550,11 +570,11 @@ function checkForWinner() {
     // Check for win conditions
     if (blackPieces === 0 || !blackCanMove) {
         isGameOver = true; // Set the game over flag
-        alert('Red wins!');
+        alert('Player 1 wins!');
         return 'red';
     } else if (redPieces === 0 || !redCanMove) {
         isGameOver = true; // Set the game over flag
-        alert('Black wins!');
+        alert('Player 2 wins!');
         return 'black';
     }
 

@@ -77,17 +77,22 @@ if ($conn->query($sql) === FALSE) {
 //Populate User Table
 $sql = "INSERT INTO Users (Username, Password) VALUES ('dolfo', 'password1')";
 if ($conn->query($sql) === FALSE) {
-    echo "rror Inserting Record: " . $conn->error;
+    echo "Error Inserting Record: " . $conn->error;
     $error = TRUE;
 }
 $sql = "INSERT INTO Users (Username, Password) VALUES ('stanley', 'password2')";
 if ($conn->query($sql) === FALSE) {
-    echo "rror Inserting Record: " . $conn->error;
+    echo "Error Inserting Record: " . $conn->error;
     $error = TRUE;
 }
 $sql = "INSERT INTO Users (Username, Password) VALUES ('daniel', 'password3')";
 if ($conn->query($sql) === FALSE) {
-    echo "rror Inserting Record: " . $conn->error;
+    echo "Error Inserting Record: " . $conn->error;
+    $error = TRUE;
+}
+$sql = "INSERT INTO Users (Username, Password) VALUES ('osvaldo', 'password4')";
+if ($conn->query($sql) === FALSE) {
+    echo "Error Inserting Record: " . $conn->error;
     $error = TRUE;
 }
 
@@ -193,6 +198,18 @@ if ($conn->query($sql) === FALSE) {
     echo "Error Inserting Record: " . $conn->error;
     $error = TRUE;
 }
+//Osvaldo Game 1
+$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('osvaldo', 'password4', 'squirepickleson', 1, 1, '00:9:01')";
+if ($conn->query($sql) === FALSE) {
+    echo "Error Inserting Record: " . $conn->error;
+    $error = TRUE;
+}
+$sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('osvaldo', 'password4', 'butters', 1, 0, '00:9:01')";
+if ($conn->query($sql) === FALSE) {
+    echo "Error Inserting Record: " . $conn->error;
+    $error = TRUE;
+}
+
 
 //Populate Global Leaderboard Table
 $sql = "INSERT INTO GlobalBoard (Username, Password, GamesPlayed, GamesWon, TimePlayed) VALUES ('dolfo', 'password1', 3, 3, '00:23:06')";
@@ -206,6 +223,11 @@ if ($conn->query($sql) === FALSE) {
     $error = TRUE;
 }
 $sql = "INSERT INTO GlobalBoard (Username, Password, GamesPlayed, GamesWon, TimePlayed) VALUES ('daniel', 'password3', 4, 2, '00:47:26')";
+if ($conn->query($sql) === FALSE) {
+    echo "Error Inserting Record: " . $conn->error;
+    $error = TRUE;
+}
+$sql = "INSERT INTO GlobalBoard (Username, Password, GamesPlayed, GamesWon, TimePlayed) VALUES ('osvaldo', 'password4', 1, 1, '00:9:01')";
 if ($conn->query($sql) === FALSE) {
     echo "Error Inserting Record: " . $conn->error;
     $error = TRUE;
