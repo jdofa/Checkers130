@@ -22,7 +22,7 @@ $password = $_SESSION['password'];
 
 // Time Played From Form
 $timePlayed = $_POST['time'];
-$timePlayed = "00:" . $timePlayed; 
+$timePlayed = "00:" . $timePlayed;
 
 // Add Local Player 1 To LocalBoard - Winner
 $sql = "INSERT INTO LocalBoard (Username, Password, LocalName, GamesPlayed, GamesWon, TimePlayed) VALUES ('$username', '$password', '$player1', 1, 1, '$timePlayed')";
@@ -45,27 +45,28 @@ $record = mysqli_fetch_array($result);
 $gamesPlayed = intval($record[2]) + 1;
 $gamesWon = intval($record[3]) + 1;
 
-$totalTimePlayed = strval($record[4]);
+//Query for sum of time played for user pswd
+$sql = "SELECT SUM(TimePlayed) FROM LocalBoard WHERE Username = '$username' AND Password = '$password'";
+$result = $conn -> query($sql);
+$record = mysqli_fetch_array($result);
+$mytime = intval($record[0]);
 
-$localTimeArr = explode(":", $timePlayed);
-$totalTimeArr = explode(":", $totalTimePlayed);
+//turn number of seconds into hours:minutes:seconds
+$total = "00:" . $mytime[0] . $mytime[1] . ":" . $mytime[2] . $mytime[3];
+$myusername = $_SESSION['username'];
+$userpassword = $_SESSION['password'];
+$sql = "UPDATE GlobalBoard SET GamesPlayed = '$gamesPlayed', GamesWon = '$gamesWon'  WHERE Username = '$myusername' AND Password = '$userpassword'";
+mysqli_query($conn, $sql);
+mysqli_close($conn);
 
-$seconds = intval($localTimeArr[1]) + intval($totalTimeArr[1]);
-$minutes = intval($localTimeArr[0]) + intval($totalTimeArr[0]);
-
-if($seconds > 59){
-    $minutes += 1;
-    $seconds -= 60;
-}
-
-$sql = "UPDATE GlobalBoard SET GamesPlayed = '$gamesPlayed', GamesWon = '$gamesWon', TimePlayed = '$newTotalTime' WHERE Username = '$username' AND Password = '$password'";
-if ($conn->query($sql) === FALSE) {
-    echo "Error Updating Record: " . $conn->error;
-    $error = TRUE;
-}
+$conn = new mysqli($servername, "root", "", $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
 
 //Close connection to database
 $conn->close();
+
 if($error == FALSE){
     header("Location: ../localleaderboard.php");
 }

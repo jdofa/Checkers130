@@ -56,13 +56,17 @@ if($seconds > 59){
     $minutes += 1;
     $seconds -= 60;
 }
+$newTotalTime = "00:" . strval($minutes) . ":" . strval($seconds);
 
+$sql = "UPDATE GlobalBoard SET GamesPlayed = '$gamesPlayed' WHERE Username = '$username' AND Password = '$password'";
+mysqli_query($conn, $sql);
+mysqli_close($conn);
 
-$sql = "UPDATE GlobalBoard SET GamesPlayed = '$gamesPlayed', TimePlayed = '$newTotalTime' WHERE Username = '$username' AND Password = '$password'";
-if ($conn->query($sql) === FALSE) {
-    echo "Error Updating Record: " . $conn->error;
-    $error = TRUE;
+$conn = new mysqli($servername, "root", "", $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
+
 //Close connection to database
 $conn->close();
 if($error == FALSE){

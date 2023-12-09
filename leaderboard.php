@@ -17,6 +17,8 @@ $result = $conn -> query($sql);
 $total = mysqli_fetch_array($result);
 $records = $total[0]; //records is the number of rows in the table
 
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,11 +62,13 @@ $records = $total[0]; //records is the number of rows in the table
                     //dynamic table from database
                     for ($i = 0; $i < $records; $i++) {
                         $record = mysqli_fetch_array($result);
+                        $currUser = $record[0];
+                        $currPswd = $record[1];
                         echo "<tr>";
-                        echo "<td> $record[0] </td>";
+                        echo "<td> $currUser </td>";
                         echo "<td> $record[2] </td>";
                         echo "<td> $record[3] </td>";
-                        echo "<td> $record[4] </td>";
+                        echo "<td> $record[4] </td>"; 
                         echo "</tr>";
                     }
                 ?>
