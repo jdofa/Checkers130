@@ -82,19 +82,16 @@ function createBoard() {
     }
 }
 
-
 //A utility function that checks if a piece on the board at a given position is a king piece.
 function isKingPiece(row, col) {
     const piece = board[row][col];
     return piece ? piece.king : false;
 }
 
-
 //Determines if a piece should be placed on a specific square of the board based on its position and board size.
 function shouldPlacePiece(row, col, boardSize) {
     return (row + col) % 2 !== 0 && (row < 3 || row >= boardSize - 3);
 }
-
 
 //Handles the logic when a square on the board is clicked. It allows players to select, move, and make moves with their pieces.
 function handleSquareClick(row, col) {
@@ -144,7 +141,6 @@ function handleSquareClick(row, col) {
     }
 }
 
-
 //Clears the selected square on the board.
 function clearSelection() {
     const previouslySelected = document.querySelector('.selected-square');
@@ -153,14 +149,12 @@ function clearSelection() {
     }
 }
 
-
 //Clears the highlighted possible moves on the board.
 function clearHighlightedMoves() {
     document.querySelectorAll('.square').forEach(square => {
         square.style.backgroundColor = ''; // Reset the background color
     });
 }
-
 
 //Checks if a player can capture an opponent's piece on the board.
 function isCaptureAvailable(player) {
@@ -176,7 +170,6 @@ function isCaptureAvailable(player) {
     }
     return false;
 }
-
 
 //Determines if a piece at a specific position can make a capture move.
 function canCaptureFrom(row, col) {
@@ -199,7 +192,6 @@ function canCaptureFrom(row, col) {
     return false;
 }
 
-
 //Checks if a capture move from one position to another is valid.
 function isValidCaptureMove(fromRow, fromCol, toRow, toCol) {
     const midRow = (fromRow + toRow) / 2;
@@ -209,7 +201,6 @@ function isValidCaptureMove(fromRow, fromCol, toRow, toCol) {
            board[midRow][midCol] !== null && 
            board[midRow][midCol] !== currentPlayer;
 }
-
 
 //Checks if a move involves capturing an opponent's piece.
 function isCaptureMove(fromRow, fromCol, toRow, toCol) {
@@ -222,7 +213,6 @@ function isCaptureMove(fromRow, fromCol, toRow, toCol) {
            board[midRow][midCol] !== null && 
            board[midRow][midCol] !== currentPlayer;
 }
-
 
 //Checks if a move from one position to another is valid.
 function isValidMove(fromRow, fromCol, toRow, toCol) {
@@ -286,12 +276,10 @@ function isValidMove(fromRow, fromCol, toRow, toCol) {
     return false;
 }
 
-
 //Determines if a given row and column are within the boundaries of the board.
 function isInsideBoard(row, col) {
     return row >= 0 && row < boardSize && col >= 0 && col < boardSize;
 }
-
 
 // Resets the game state to the initial setup, including player turns, the timer, and the board.
 function resetGame() {
@@ -302,7 +290,6 @@ function resetGame() {
     createBoard(); // Re-create the board
 }
 
-
 // Function to reset the timer
 function resetTimer() {
     clearInterval(timerInterval);
@@ -310,7 +297,6 @@ function resetTimer() {
     document.getElementById("timeElapsed").innerText = "00:00";
     startTimer(); // Start the timer
 }
-
 
 //Moves a game piece from one position to another on the board.
 function movePiece(fromRow, fromCol, toRow, toCol) {
@@ -370,7 +356,6 @@ function removePieceFromBoard(row, col) {
     }
 }
 
-
 //Updates the visual representation of a piece on the board when it is moved.
 function updatePieceOnBoard(fromRow, fromCol, toRow, toCol) {
     const squareFrom = document.querySelector(`[data-row="${fromRow}"][data-col="${fromCol}"]`);
@@ -389,7 +374,6 @@ function updatePieceOnBoard(fromRow, fromCol, toRow, toCol) {
     }
 }
 
-
 //Promotes a piece to a king if it reaches the opposite end of the board.
 function kingPiece(row, col) {
     // Update the UI
@@ -401,7 +385,6 @@ function kingPiece(row, col) {
     // Assuming each cell in the board array contains an object with a 'king' property
     board[row][col].king = true;
 }
-
 
 //Updates the hover effect on squares based on the current player's turn.
 function updateHoverEffect() {
@@ -415,7 +398,6 @@ function updateHoverEffect() {
         }
     });
 }
-
 
 //Updates the game status, checking for a winner or the current player's turn.
 function updateGameStatus() {
@@ -459,9 +441,6 @@ function updateGameStatus() {
     }
 }
 
-
-
-
 //Calculates and highlights possible moves for a selected piece.
 function calculatePossibleMoves(row, col) {
     const possibleMoves = [];
@@ -477,7 +456,6 @@ function calculatePossibleMoves(row, col) {
     //highlightMoves(blockedMoves, 'red');
 }
 
-
 //Checks and adds possible moves in a specific direction based on the current player's piece.
 function checkMoveDirection(possibleMoves, blockedMoves, row, col, rowIncrement, colIncrement) {
     const newRow = row + rowIncrement;
@@ -492,7 +470,6 @@ function checkMoveDirection(possibleMoves, blockedMoves, row, col, rowIncrement,
     }
 }
 
-
 //Highlights squares on the board to indicate possible moves.
 function highlightMoves(moves, color) {
     moves.forEach(move => {
@@ -503,14 +480,12 @@ function highlightMoves(moves, color) {
     });
 }
 
-
 //Clears the highlighted move indicators on the board.
 function clearHighlightedMoves() {
     document.querySelectorAll('.square').forEach(square => {
         square.style.backgroundColor = ''; // Reset the background color
     });
 }
-
 
 //Initializes and starts the game timer.
 function startTimer() {
@@ -520,7 +495,6 @@ function startTimer() {
         document.getElementById("timeElapsed").innerText = timeToString(elapsedTime);
     }, 1000);
 }
-
 
 //Converts a time duration to a formatted string (MM:SS).
 function timeToString(time) {
@@ -539,7 +513,6 @@ function timeToString(time) {
     return `${formattedMM}:${formattedSS}`;
 }
 
-
 //Updates the count of pieces for each player on the board.
 function updatePieceCount() {
     let redPieces = 0;
@@ -555,7 +528,6 @@ function updatePieceCount() {
     document.getElementById("redPiecesCount").innerText = redPieces;
     document.getElementById("blackPiecesCount").innerText = blackPieces;
 }
-
 
 //Checks if there is a winner in the game based on the number of remaining pieces and their ability to move.
 function checkForWinner() {
@@ -596,7 +568,6 @@ function checkForWinner() {
     return null; // No winner yet
 }
 
-
 // Checks if a player can make a regular move from a given position.
 function canMakeMove(row, col, player) {
     const directions = getPlayerDirections(player, row, col);
@@ -610,7 +581,6 @@ function canMakeMove(row, col, player) {
     }
     return false;
 }
-
 
 //Determines the valid move directions for a player's piece.
 function getPlayerDirections(player, row, col) {
@@ -629,9 +599,7 @@ function getPlayerDirections(player, row, col) {
     return directions;
 }
 
-
 ///Creating a bot to play
-
 let isBotMoveMade = false;
 
 // Initiates the bot's move, including selecting the best move using the minimax algorithm.
@@ -662,9 +630,6 @@ function handleBotMoveCompletion() {
     checkGameState(); // Call a new function to check the game state
 }
 
-
-
-
 // Toggles between players and handles bot moves.
 function togglePlayer() {
     if (gameMode === 'bot') {
@@ -681,8 +646,6 @@ function togglePlayer() {
     updateGameStatus(); // Always update game status after toggling
 }
 
-
-
 function switchPlayer() {
     if (currentPlayer === 'bot') {
         currentPlayer = 'red';
@@ -692,8 +655,6 @@ function switchPlayer() {
     }
     // Update the game UI to reflect the current player
 }
-
-
 
 function checkGameState() {
     if (isGameOver) {
@@ -705,20 +666,11 @@ function checkGameState() {
     }
 }
 
-
-
-
-
-
-
 // Additional function to be called when the bot move is completed
 function botMoveCompleted() {
     isBotMoveMade = true; // Mark bot move as completed
     togglePlayer(); // Toggle player after bot move completion
 }
-
-
-
 
 //Implements the minimax algorithm for selecting the best move for the bot.
 function minimax(board, depth, maximizingPlayer) {
@@ -752,7 +704,6 @@ function minimax(board, depth, maximizingPlayer) {
     }
 }
 
-
 // Simulates a move on a board to evaluate potential outcomes.
 function simulateMove(board, move) {
     let newBoard = JSON.parse(JSON.stringify(board)); // Deep copy of board
@@ -780,7 +731,6 @@ function simulateMove(board, move) {
     return newBoard;
 }
 
-
 //Evaluates the current state of the board and returns a score.
 function evaluateBoard(board) {
     let score = 0;
@@ -794,13 +744,11 @@ function evaluateBoard(board) {
     return score;
 }
 
-
 //Selects the best move from a list of legal moves for the bot.
 function selectBestMove(legalMoves) {
     // Example logic for selecting one move - can be modified for more complex strategy
     return legalMoves[0]; // For now, simply return the first move in the list
 }
-
 
 //Finds all legal moves for a given player on the board.
 function findAllLegalMoves(player) {
@@ -822,7 +770,6 @@ function findAllLegalMoves(player) {
     console.log(`[Find Legal Moves] Total moves found for ${player}:`, moves);
     return moves;
 }
-
 
 function findRegularMoves(row, col, player) {
     let regularMoves = [];
@@ -862,7 +809,6 @@ function findCaptureMoves(row, col, player) {
 
 let gameMode = 'human'; // Default to 'human' mode
 
-
 document.getElementById('opponentType').addEventListener('change', function() {
     gameMode = this.value; // Correctly set the game mode
     let opponentType = this.value;
@@ -877,8 +823,6 @@ document.getElementById('opponentType').addEventListener('change', function() {
     // Reinitialize the board with the new settings
     createBoard();
 });
-
-
 
 function resetGame() {
     document.getElementById('player1Move').hidden = false;
@@ -906,7 +850,6 @@ function resetGame() {
     // Recreate the board with the current settings
     createBoard();
 }
-
 
 // Button that ends game, to test the game over state
 

@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+//If not logged in, redirect back to index.php
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == false){
+    header("Location: index.php");
+}
+
 $boardSize = $_SESSION['boardSize'];
 $boardColor1 = $_SESSION['boardColor1'];
 $boardColor2 = $_SESSION['boardColor2'];
